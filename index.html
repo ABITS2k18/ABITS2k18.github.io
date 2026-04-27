@@ -2,138 +2,1057 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abhishek Patel | IT Systems & Cybersecurity </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abhishek Patel // Cyber Security Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <style>
+    :root {
+      --bg:        #050810;
+      --bg2:       #080d1a;
+      --panel:     #0a1128;
+      --blue:      #00aaff;
+      --blue2:     #0055ff;
+      --cyan:      #00ffee;
+      --green:     #00ff88;
+      --red:       #ff2255;
+      --dim:       #1a2a4a;
+      --text:      #c8e0ff;
+      --muted:     #4a6080;
+      --border:    #0a2040;
+      --glow:      0 0 8px #00aaff88, 0 0 24px #00aaff33;
+      --glow-sm:   0 0 4px #00aaff66;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0e1116;
-      color: #f1f1f1;
-      margin: 0;
-      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
+
+    /* ─── SCANLINES OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.07) 2px,
+        rgba(0,0,0,0.07) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ─── GRID BACKGROUND ─── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,170,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,170,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── PARTICLES CANVAS ─── */
+    #particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+    /* ─── LAYOUT ─── */
+    .wrapper { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── TERMINAL CURSOR ─── */
+    .cursor {
+      display: inline-block;
+      width: 10px; height: 1.2em;
+      background: var(--blue);
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+      margin-left: 2px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ─── HEADER ─── */
     header {
-      text-align: center;
-      padding: 60px 20px 20px 20px;
-      background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+      position: relative;
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--dim);
     }
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1.1rem;
-      color: #b0b0b0;
-    }
-    section {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    h2 {
-      color: #00adb5;
-      border-bottom: 2px solid #00adb5;
-      padding-bottom: 5px;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      margin-bottom: 10px;
-    }
-    .skills-list, .cert-list {
+
+    .header-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
     }
-    .project {
-      background: #1c1f25;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+
+    .terminal-prompt {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--green);
+      font-size: 13px;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeIn 0.5s 0.3s forwards;
     }
-    a {
-      color: #00adb5;
+    .terminal-prompt span { color: var(--blue); }
+
+    .name-block {
+      opacity: 0;
+      animation: slideUp 0.7s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+
+    .name-main {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(32px, 5vw, 62px);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, var(--blue) 50%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 20px #00aaff55);
+    }
+
+    .title-tag {
+      font-family: 'Orbitron', monospace;
+      font-size: 13px;
+      color: var(--blue);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .title-tag::before {
+      content: '';
+      display: inline-block;
+      width: 30px; height: 1px;
+      background: var(--blue);
+      box-shadow: var(--glow-sm);
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 24px;
+      opacity: 0;
+      animation: fadeIn 0.5s 1s forwards;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
       text-decoration: none;
+      transition: color 0.2s;
     }
-    a:hover {
-      text-decoration: underline;
+    .contact-item:hover { color: var(--cyan); }
+    .contact-item .icon {
+      width: 16px; height: 16px;
+      fill: currentColor;
     }
-    footer {
-      text-align: center;
+
+    /* Status Badge */
+    .status-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeIn 0.5s 0.8s forwards;
+    }
+    .hex-avatar {
+      position: relative;
+      width: 120px; height: 138px;
+    }
+    .hex-avatar svg { width: 100%; height: 100%; }
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.2);
+      padding: 4px 12px;
+      border-radius: 2px;
+    }
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5,8,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--dim);
+      padding: 14px 0;
+    }
+    .nav-inner {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .nav-link {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      letter-spacing: 0.1em;
+      transition: all 0.2s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--blue);
+      border-color: var(--dim);
+      background: rgba(0,170,255,0.06);
+      box-shadow: var(--glow-sm);
+    }
+    .nav-sep { color: var(--dim); margin: 0 4px; font-family: 'Share Tech Mono',monospace; font-size:12px;}
+
+    /* ─── SECTIONS ─── */
+    section { padding: 70px 0; border-bottom: 1px solid rgba(10,32,64,0.6); }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .section-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--blue);
+      opacity: 0.5;
+    }
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--dim), transparent);
+    }
+
+    /* ─── SUMMARY ─── */
+    .summary-panel {
+      background: var(--panel);
+      border: 1px solid var(--dim);
+      border-left: 3px solid var(--blue);
+      padding: 28px 32px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+      position: relative;
+      box-shadow: inset 0 0 40px rgba(0,85,255,0.04);
+    }
+    .summary-panel::before {
+      content: '> PROFILE.init()';
+      display: block;
+      color: var(--green);
+      font-size: 12px;
+      margin-bottom: 16px;
+      opacity: 0.7;
+    }
+
+    /* ─── SKILLS / TOOLS ─── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .tool-card {
+      background: var(--panel);
+      border: 1px solid var(--dim);
       padding: 20px;
-      background-color: #111418;
-      color: #aaa;
-      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .tool-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,170,255,0.04), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tool-card:hover {
+      border-color: var(--blue2);
+      transform: translateY(-2px);
+      box-shadow: var(--glow);
+    }
+    .tool-card:hover::after { opacity: 1; }
+    .tool-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    .tool-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .tool-desc {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .tool-tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--cyan);
+      background: rgba(0,255,238,0.07);
+      border: 1px solid rgba(0,255,238,0.15);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    /* ─── SKILL BARS ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 48px;
+    }
+    .skill-row { margin-bottom: 4px; }
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .skill-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--text);
+    }
+    .skill-pct {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--blue);
+    }
+    .bar-track {
+      height: 3px;
+      background: var(--dim);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue2), var(--cyan));
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 0 6px var(--cyan);
+    }
+
+    /* ─── EXPERIENCE ─── */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--blue), transparent);
+    }
+    .exp-item {
+      position: relative;
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .exp-item.visible { opacity: 1; transform: translateX(0); }
+    .exp-item::before {
+      content: '';
+      position: absolute;
+      left: -36px; top: 8px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: var(--glow);
+    }
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .exp-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .exp-company {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+    .exp-date {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(0,170,255,0.08);
+      border: 1px solid var(--dim);
+      padding: 2px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .exp-bullets {
+      list-style: none;
+      margin-top: 12px;
+    }
+    .exp-bullets li {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 4px 0;
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .exp-bullets li::before {
+      content: '▹';
+      position: absolute; left: 0;
+      color: var(--blue);
+    }
+
+    /* ─── CERTS ─── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .cert-card {
+      background: var(--panel);
+      border: 1px solid var(--dim);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--blue2), var(--cyan));
+    }
+    .cert-card:hover {
+      border-color: var(--blue2);
+      box-shadow: var(--glow);
+      transform: translateY(-2px);
+    }
+    .cert-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--blue);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .cert-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .cert-school {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ─── MISSION / TARGET ─── */
+    .target-panel {
+      background: linear-gradient(135deg, rgba(0,85,255,0.06), rgba(0,170,255,0.03));
+      border: 1px solid rgba(0,170,255,0.2);
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .target-panel::before {
+      content: '// OBJECTIVE';
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--blue);
+      opacity: 0.4;
+      display: block;
+      margin-bottom: 16px;
+      letter-spacing: 0.2em;
+    }
+    .target-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 22px;
+      color: #fff;
+      line-height: 1.5;
+    }
+    .target-text em {
+      font-style: normal;
+      color: var(--cyan);
+    }
+    .corner-deco {
+      position: absolute;
+      width: 40px; height: 40px;
+      border-color: var(--blue);
+      border-style: solid;
+      opacity: 0.3;
+    }
+    .corner-deco.tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+    .corner-deco.tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+    .corner-deco.bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+    .corner-deco.br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    footer span { color: var(--blue); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes scanIn {
+      from { clip-path: inset(0 100% 0 0); }
+      to   { clip-path: inset(0 0% 0 0); }
+    }
+
+    /* ─── TYPING EFFECT ─── */
+    .type-text {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 2s steps(40) 1.2s both;
+      border-right: 2px solid var(--blue);
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to   { width: 100%; }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .header-grid { grid-template-columns: 1fr; }
+      .status-badge { display: none; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .tools-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Abhishek Patel</h1>
-    <p> IT Systems and Operations Engineer | System Administration | Cybersecurity Enthusiast |</p>
-  </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>IT Engineer with 6+ years of experience in infrastructure support at large scale organizations like Amazon, Linamar Corporation and the Ministry of Government of Consumer Services. Proven track record of user support with exceptional customer service skills. Expert in managing a fleet of WindowsOS devices via SCCM and Mac devices via JAMF. Skilled in managing Windows and Linux servers required for system administration and security hardening. Experienced in server configuration and virtualization</p>
-  </section>
+<canvas id="particles"></canvas>
 
-  <section id="skills">
-    <h2>Technical Skills</h2>
-    <div class="skills-list">
-      <div>Windows Server Administration</div>
-      <div>Linux Server Administration</div>
-      <div>M365 Administration</div>
-      <div>SIEM Implementation & Monitoring</div>
-      <div>Virtualization (VMware / Hyper-V)</div>
-      <div>PowerShell Scripting</div>
-      <div>Active Directory & Group Policy</div>
-      <div>Networking & Security Fundamentals</div>
+<!-- ─────────────────── HEADER ─────────────────── -->
+<header>
+  <div class="wrapper">
+    <div class="header-grid">
+      <div>
+        <div class="terminal-prompt">
+          <span>root@kali</span>:~# whoami --verbose<span class="cursor"></span>
+        </div>
+        <div class="name-block">
+          <div class="name-main">ABHISHEK PATEL</div>
+          <div class="title-tag">IT Escalations Engineer → Cybersecurity Engineer</div>
+        </div>
+        <div class="contact-row">
+          <a class="contact-item" href="mailto:Abhishek2995@gmail.com">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Abhishek2995@gmail.com
+          </a>
+          <a class="contact-item" href="tel:+14164711315">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+            +1 (416) 471-1315
+          </a>
+          <a class="contact-item" href="https://www.linkedin.com/in/abhipatel29/" target="_blank">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            linkedin.com/in/abhipatel29
+          </a>
+          <span class="contact-item">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Canada
+          </span>
+        </div>
+      </div>
+
+      <div class="status-badge">
+        <div class="hex-avatar">
+          <svg viewBox="0 0 120 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hexGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0055ff" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#00ffee" stop-opacity="0.1"/>
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <!-- Hex shape -->
+            <polygon points="60,4 113,33 113,105 60,134 7,105 7,33" fill="url(#hexGrad)" stroke="#00aaff" stroke-width="1" filter="url(#glow)" opacity="0.8"/>
+            <polygon points="60,14 103,38 103,100 60,124 17,100 17,38" fill="none" stroke="#00aaff" stroke-width="0.5" opacity="0.3"/>
+            <!-- Shield icon inside -->
+            <path d="M60 35 L80 43 L80 65 C80 77 70 85 60 88 C50 85 40 77 40 65 L40 43 Z" fill="none" stroke="#00aaff" stroke-width="1.5" opacity="0.9" filter="url(#glow)"/>
+            <path d="M53 60 L58 65 L68 55" stroke="#00ffee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"/>
+            <!-- Rotating ring dashes -->
+            <g opacity="0.4">
+              <circle cx="60" cy="69" r="26" fill="none" stroke="#0055ff" stroke-width="0.5" stroke-dasharray="4 6"/>
+            </g>
+            <text x="60" y="113" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7" fill="#00aaff" opacity="0.6">SEC_ENGINEER</text>
+          </svg>
+        </div>
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          ACTIVE // AWS
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <section id="projects">
-    <h2>Projects</h2>
-
-    <div class="project">
-      <h3>Virtual Cybersecurity Home Lab</h3>
-      <p>Built a virtual home lab using VirtualBox to simulate attacks and defense. Practiced vulnerability scanning and remediation using Nmap, Metasploit, and fail2ban to strengthen hands-on experience in vulnerability management and remediation.</p>
+<!-- ─────────────────── NAV ─────────────────── -->
+<nav>
+  <div class="wrapper">
+    <div class="nav-inner">
+      <a class="nav-link active" href="#summary">PROFILE</a>
+      <span class="nav-sep">/</span>
+      <a class="nav-link" href="#tools">TOOLS</a>
+      <span class="nav-sep">/</span>
+      <a class="nav-link" href="#skills">SKILLS</a>
+      <span class="nav-sep">/</span>
+      <a class="nav-link" href="#experience">EXPERIENCE</a>
+      <span class="nav-sep">/</span>
+      <a class="nav-link" href="#certs">CERTS</a>
+      <span class="nav-sep">/</span>
+      <a class="nav-link" href="#mission">MISSION</a>
     </div>
+  </div>
+</nav>
 
-    <div class="project">
-      <h3>Cloud Storage Deployment with FileCloud & AWS</h3>
-      <p>Developed a personal cloud storage solution using FileCloud Community Edition for the frontend UI, AWS S3 for backend storage, and EC2 for hosting the FileCloud server, demonstrating end-to-end cloud infrastructure management and deployment.</p>
+<!-- ─────────────────── SUMMARY ─────────────────── -->
+<section id="summary">
+  <div class="wrapper">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Profile</span>
+      <div class="section-line"></div>
     </div>
-
-    <div class="project">
-      <h3>Active Directory Automation Scripts</h3>
-      <p>Created PowerShell automation scripts for user provisioning, network drive mapping, and AD group synchronization to improve operational efficiency and reduce manual errors.</p>
+    <div class="summary-panel">
+      Results-driven IT Escalations Engineer with 5+ years of progressive experience across cloud infrastructure, enterprise identity management, endpoint security, and on-premises systems administration. Proven track record at Amazon Web Services supporting large-scale internal users on AWS services, Microsoft 365 ecosystem management, and threat response. Adept at bridging corporate security, cloud engineering, and end-user support teams to deliver seamless IT operations and robust security posture.<span class="cursor"></span>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="certifications">
-    <h2>Certifications & Training</h2>
-    <div class="cert-list">
-      <div>Cyber Security Analyst – Flatiron School</div>
-      <div>CompTIA Security+</div>
-      <div>AWS Certified Cloud Practitioner</div>
+<!-- ─────────────────── HACKING TOOLS ─────────────────── -->
+<section id="tools">
+  <div class="wrapper">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Security Arsenal</span>
+      <div class="section-line"></div>
     </div>
-  </section>
+    <div class="tools-grid">
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <ul>
-      <li>📧 <a href="mailto:abpatel.work@gmail.com">abpatel.work@gmail.com</a></li>
-      <li>💼 <a href="https://www.linkedin.com/in/abhipatel29/" target="_blank">LinkedIn</a></li>
-      <li>💻 <a href="https://github.com/ABITS2k18" target="_blank">GitHub</a></li>
-    </ul>
-  </section>
+      <div class="tool-card">
+        <div class="tool-icon">📡</div>
+        <div class="tool-name">NMAP</div>
+        <div class="tool-desc">Network mapper for host discovery, port scanning, service versioning & OS detection. Backbone of any recon phase.</div>
+        <span class="tool-tag">Reconnaissance</span>
+      </div>
 
-  <footer>
-    <p>© 2025 Abhishek Patel | Built with 💻 and ☕</p>
-  </footer>
+      <div class="tool-card">
+        <div class="tool-icon">🔓</div>
+        <div class="tool-name">METASPLOIT</div>
+        <div class="tool-desc">World's most used penetration testing framework. Exploit modules, payloads, post-exploitation & automation.</div>
+        <span class="tool-tag">Exploitation</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🌐</div>
+        <div class="tool-name">BURP SUITE</div>
+        <div class="tool-desc">Industry-leading web application security testing platform. Intercept, modify & replay HTTP/S traffic.</div>
+        <span class="tool-tag">Web AppSec</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🦈</div>
+        <div class="tool-name">WIRESHARK</div>
+        <div class="tool-desc">Deep packet inspection and network protocol analysis. Dissect live traffic or pcap captures in real-time.</div>
+        <span class="tool-tag">Network Analysis</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">⚡</div>
+        <div class="tool-name">AIRCRACK-NG</div>
+        <div class="tool-desc">Complete suite for 802.11 WEP/WPA wireless network security assessment — capture, crack, replay attacks.</div>
+        <span class="tool-tag">Wireless</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🔐</div>
+        <div class="tool-name">HASHCAT</div>
+        <div class="tool-desc">World's fastest password recovery utility. GPU-accelerated brute-force, dictionary & rule-based attacks.</div>
+        <span class="tool-tag">Password Cracking</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🕷️</div>
+        <div class="tool-name">SQLMAP</div>
+        <div class="tool-desc">Automated SQL injection and database takeover tool. Detects and exploits SQLi in web applications.</div>
+        <span class="tool-tag">Injection</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🔍</div>
+        <div class="tool-name">JOHN THE RIPPER</div>
+        <div class="tool-desc">Classic offline password cracker supporting 20+ hash types — Unix, Windows NTLM, Kerberos and more.</div>
+        <span class="tool-tag">Password Cracking</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🧱</div>
+        <div class="tool-name">GOBUSTER / FFUF</div>
+        <div class="tool-desc">Directory/file & DNS brute-forcing tools. Uncover hidden web paths, vhosts & parameters at high speed.</div>
+        <span class="tool-tag">Enumeration</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🛡️</div>
+        <div class="tool-name">MS DEFENDER</div>
+        <div class="tool-desc">Enterprise-grade threat protection used daily to hunt, quarantine & respond to phishing & malware campaigns.</div>
+        <span class="tool-tag">Threat Hunting</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">☁️</div>
+        <div class="tool-name">AWS IAM / PACU</div>
+        <div class="tool-desc">Cloud security posture management & AWS exploitation framework for IAM privilege escalation testing.</div>
+        <span class="tool-tag">Cloud Security</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🐉</div>
+        <div class="tool-name">KALI LINUX</div>
+        <div class="tool-desc">Debian-based penetration testing OS — home base for ethical hacking with 600+ pre-installed security tools.</div>
+        <span class="tool-tag">Platform</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── SKILLS ─────────────────── -->
+<section id="skills">
+  <div class="wrapper">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">Technical Skills</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid" id="skillsGrid">
+
+      <div class="skill-row">
+        <div class="skill-header"><span class="skill-label">AWS (EC2, VPC, S3, IAM)</span><span class="skill-pct">92%</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="92"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-header"><span class="skill-label">Microsoft Entra ID / Azure AD</span><span class="skill-pct">88%</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="88"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-header"><span class="skill-label">Email Threat Hunting</span><span class="skill-pct">85%</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="85"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-header"><span class="skill-label">Active Directory / Group Policy</span><span class="skill-pct">87%</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="87"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-header"><span class="skill-label">Exchange Online / SharePoint</span><span class="skill-pct">82%</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="82"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-header"><span class="skill-label">Security Incident Response</span><span class="skill-pct">80%</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-header"><span class="skill-label">Network Infrastructure</span><span class="skill-pct">78%</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="78"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-header"><span class="skill-label">Penetration Testing (Learning)</span><span class="skill-pct">65%</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="65"></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── EXPERIENCE ─────────────────── -->
+<section id="experience">
+  <div class="wrapper">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Experience</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">IT Escalations Engineer II</div>
+            <div class="exp-company">Amazon Web Services (AWS) — Canada</div>
+          </div>
+          <span class="exp-date">2022 – Present</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Tier 2/3 escalation support for internal users on EC2, VPC, S3, and IAM — resolving complex infrastructure and access issues.</li>
+          <li>Manage Microsoft Entra ID (Azure AD), Exchange Online & SharePoint — provisioning, access control, and policy enforcement.</li>
+          <li>Utilize Microsoft Defender to hunt, investigate & quarantine malicious emails, reducing organizational phishing risk.</li>
+          <li>Collaborate with AWS Corporate Security on service onboarding, security controls & incident response playbooks.</li>
+          <li>Develop & maintain a comprehensive IT Knowledge Base, enabling self-service and reducing repeat escalation volume.</li>
+          <li>Subject matter expert on cloud IAM, advising teams on least-privilege principles and access management best practices.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Senior Desktop & Systems Technician</div>
+            <div class="exp-company">Linamar Corporation — Ontario, Canada</div>
+          </div>
+          <span class="exp-date">2019 – 2021</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Comprehensive IT support for 400+ end users — Active Directory, network shares, Group Policy & Hyper-V server admin.</li>
+          <li>Led commissioning & decommissioning of network racks, switches & UPS systems with zero-downtime transitions.</li>
+          <li>Lead IT Engineer for local facility, collaborating on infrastructure upgrade and expansion projects with corporate teams.</li>
+          <li>Administered engineering software licenses (AutoCAD, SolidWorks) for 100+ engineering users.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Desktop & Systems Technician Co-op</div>
+            <div class="exp-company">Linamar Corporation – Skyjack Inc. — Ontario, Canada</div>
+          </div>
+          <span class="exp-date">2018 – 2019</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Laptop imaging, configuration & deployment for new and replacement endpoints across the organization.</li>
+          <li>Frontline user support for hardware, software & connectivity issues.</li>
+          <li>Delivered onboarding & IT training sessions for new employees, accelerating user readiness.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── CERTS / EDUCATION ─────────────────── -->
+<section id="certs">
+  <div class="wrapper">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">Education & Certifications</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="certs-grid">
+
+      <div class="cert-card">
+        <div class="cert-label">Certificate Program</div>
+        <div class="cert-name">Cybersecurity Analyst</div>
+        <div class="cert-school">Flatiron School</div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-label">Diploma</div>
+        <div class="cert-name">Computer and Network Systems</div>
+        <div class="cert-school">Mohawk College</div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-label">Bachelor's Degree</div>
+        <div class="cert-name">Bachelor of Computer Applications (BCA)</div>
+        <div class="cert-school">Gujarat University</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── MISSION ─────────────────── -->
+<section id="mission">
+  <div class="wrapper">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">Mission</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="target-panel">
+      <div class="corner-deco tl"></div>
+      <div class="corner-deco tr"></div>
+      <div class="corner-deco bl"></div>
+      <div class="corner-deco br"></div>
+      <div class="target-text">
+        Transitioning from <em>cloud infrastructure & IT escalations</em> into the offensive and defensive frontlines of <em>cybersecurity</em>. My mission is to leverage deep AWS and enterprise security experience to become a <em>penetration tester</em> and <em>threat intelligence engineer</em> — turning 5+ years of production system knowledge into a weapon for the defense of digital infrastructure.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── FOOTER ─────────────────── -->
+<footer>
+  <div class="wrapper">
+    <p>
+      <span>root@abhishek-patel</span>:~# <span>exit 0</span> &nbsp;|&nbsp;
+      Built with 💙 &amp; Kali vibes &nbsp;|&nbsp;
+      <span>© 2025 Abhishek Patel</span>
+    </p>
+  </div>
+</footer>
+
+<!-- ─────────────────── SCRIPTS ─────────────────── -->
+<script>
+  /* ── Particles ── */
+  (function () {
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * 2000,
+        y: Math.random() * 1200,
+        r: Math.random() * 1.2 + 0.2,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        a: Math.random() * 0.5 + 0.1
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,170,255,${p.a})`;
+        ctx.fill();
+      });
+      // connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0,85,255,${0.12 * (1 - dist/120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  /* ── Skill bar animation on scroll ── */
+  const skillObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+        skillObs.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  skillObs.observe(document.getElementById('skillsGrid'));
+
+  /* ── Experience items on scroll ── */
+  const expObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.exp-item').forEach(el => expObs.observe(el));
+
+  /* ── Active nav link ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => navObs.observe(s));
+</script>
 </body>
 </html>
