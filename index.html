@@ -583,6 +583,199 @@
     }
     @media (max-width: 480px) {
       .tools-grid { grid-template-columns: 1fr; }
+      .contact-form-wrapper { grid-template-columns: 1fr; }
+    }
+
+    /* ─── CONTACT FORM ─── */
+    .contact-form-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .contact-intro {
+      position: sticky;
+      top: 100px;
+    }
+
+    .contact-terminal {
+      background: var(--panel);
+      border: 1px solid var(--dim);
+      border-left: 3px solid var(--green);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .ct-prompt {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--green);
+      display: block;
+      margin-bottom: 12px;
+      opacity: 0.8;
+    }
+
+    .ct-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .contact-details-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .cd-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 10px 16px;
+      background: rgba(0,170,255,0.04);
+      border: 1px solid var(--dim);
+      border-radius: 2px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .cd-item:hover {
+      border-color: var(--blue);
+      color: var(--cyan);
+    }
+
+    .cd-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--blue);
+    }
+
+    .contact-form {
+      background: var(--panel);
+      border: 1px solid var(--dim);
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-form::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--blue2), var(--cyan), var(--blue2));
+      animation: scanLine 3s linear infinite;
+    }
+
+    @keyframes scanLine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+
+    .label-bracket {
+      color: var(--cyan);
+      opacity: 0.6;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(5,8,16,0.8);
+      border: 1px solid var(--dim);
+      border-radius: 2px;
+      padding: 14px 16px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-input::placeholder {
+      color: var(--muted);
+      opacity: 0.6;
+    }
+
+    .form-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 12px rgba(0,170,255,0.2), inset 0 0 20px rgba(0,170,255,0.03);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, rgba(0,85,255,0.15), rgba(0,170,255,0.08));
+      border: 1px solid var(--blue);
+      color: var(--cyan);
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      padding: 14px 32px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+
+    .form-submit:hover {
+      background: linear-gradient(135deg, rgba(0,85,255,0.3), rgba(0,170,255,0.15));
+      box-shadow: var(--glow);
+      transform: translateY(-2px);
+      color: #fff;
+    }
+
+    .form-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-glow {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(0,255,238,0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .form-submit:hover .btn-glow {
+      transform: translateX(100%);
+    }
+
+    .btn-icon {
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .contact-form-wrapper { grid-template-columns: 1fr; }
+      .contact-intro { position: static; }
     }
   </style>
 </head>
@@ -672,6 +865,8 @@
       <a class="nav-link" href="#certs">CERTS</a>
       <span class="nav-sep">/</span>
       <a class="nav-link" href="#mission">MISSION</a>
+      <span class="nav-sep">/</span>
+      <a class="nav-link" href="#contact">CONTACT</a>
     </div>
   </div>
 </nav>
@@ -946,6 +1141,88 @@
       <div class="target-text">
         Transitioning from <em>cloud infrastructure & IT escalations</em> into the offensive and defensive frontlines of <em>cybersecurity</em>. My mission is to leverage deep AWS and enterprise security experience to become a <em>penetration tester</em> and <em>threat intelligence engineer</em> — turning 5+ years of production system knowledge into a weapon for the defense of digital infrastructure.
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── CONTACT ─────────────────── -->
+<section id="contact">
+  <div class="wrapper">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <span class="section-title">Contact</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="contact-form-wrapper">
+      <div class="contact-intro">
+        <div class="contact-terminal">
+          <span class="ct-prompt">&gt; INITIATE_CONTACT.sh</span>
+          <p class="ct-text">Got a question, project idea, or just want to connect? Drop me a message below and I'll get back to you ASAP.</p>
+        </div>
+        <div class="contact-details-panel">
+          <div class="cd-item">
+            <svg class="cd-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/></svg>
+            <span>abhishek2995@gmail.com</span>
+          </div>
+          <div class="cd-item">
+            <svg class="cd-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/></svg>
+            <span>Canada</span>
+          </div>
+          <div class="cd-item">
+            <svg class="cd-icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" fill="currentColor"/></svg>
+            <a href="https://www.linkedin.com/in/abhipatel29/" target="_blank" style="color:inherit;text-decoration:none;">linkedin.com/in/abhipatel29</a>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" action="https://formsubmit.co/abhishek2995@gmail.com" method="POST">
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_subject" value="New Contact Form Submission from Portfolio">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none">
+
+        <div class="form-group">
+          <label class="form-label" for="name">
+            <span class="label-bracket">[</span> NAME <span class="label-bracket">]</span>
+          </label>
+          <input type="text" id="name" name="name" class="form-input" placeholder="Your full name" required>
+          <div class="input-glow"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">
+            <span class="label-bracket">[</span> EMAIL <span class="label-bracket">]</span>
+          </label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required>
+          <div class="input-glow"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="subject">
+            <span class="label-bracket">[</span> SUBJECT <span class="label-bracket">]</span>
+          </label>
+          <input type="text" id="subject" name="_subject" class="form-input" placeholder="What's this about?" required>
+          <div class="input-glow"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">
+            <span class="label-bracket">[</span> MESSAGE <span class="label-bracket">]</span>
+          </label>
+          <textarea id="message" name="message" class="form-input form-textarea" placeholder="Type your message here..." rows="5" required></textarea>
+          <div class="input-glow"></div>
+        </div>
+
+        <button type="submit" class="form-submit">
+          <span class="btn-text">TRANSMIT_MESSAGE</span>
+          <span class="btn-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/></svg>
+          </span>
+          <span class="btn-glow"></span>
+        </button>
+      </form>
     </div>
   </div>
 </section>
