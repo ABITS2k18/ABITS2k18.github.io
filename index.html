@@ -778,6 +778,165 @@
       .contact-form-wrapper { grid-template-columns: 1fr; }
       .contact-intro { position: static; }
     }
+
+    /* ═══════════════════════════════════════════════════
+       LIQUID GLASS  ·  glassmorphism layer
+       Frosted, translucent, blurred surfaces with a
+       refractive top highlight + soft inner glow.
+       ═══════════════════════════════════════════════════ */
+    .glass {
+      position: relative;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 170, 255, 0.10) 0%,
+        rgba(10, 17, 40, 0.55) 45%,
+        rgba(5, 8, 16, 0.60) 100%
+      );
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      border: 1px solid rgba(0, 170, 255, 0.22);
+      box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 0 32px rgba(0, 170, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    /* refractive light streak across the top edge */
+    .glass::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 45%;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.03) 40%,
+        transparent 100%
+      );
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    /* liquid sheen that drifts on hover */
+    .glass::after {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: radial-gradient(
+        circle at 30% 20%,
+        rgba(0, 255, 238, 0.10),
+        transparent 45%
+      );
+      transform: translate(0, 0);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .glass:hover::after { opacity: 1; transform: translate(12%, 10%); }
+
+    /* Apply liquid glass to key surfaces (layered over cyber theme) */
+    nav {
+      background: rgba(8, 13, 26, 0.55) !important;
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      border-bottom: 1px solid rgba(0, 170, 255, 0.22) !important;
+    }
+
+    .summary-panel,
+    .tool-card,
+    .cert-card,
+    .target-panel,
+    .contact-form,
+    .contact-terminal {
+      background: linear-gradient(
+        135deg,
+        rgba(0, 170, 255, 0.09) 0%,
+        rgba(10, 17, 40, 0.55) 45%,
+        rgba(5, 8, 16, 0.60) 100%
+      ) !important;
+      backdrop-filter: blur(14px) saturate(150%);
+      -webkit-backdrop-filter: blur(14px) saturate(150%);
+      border: 1px solid rgba(0, 170, 255, 0.20);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.40),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    }
+    .tool-card { border-radius: 10px; }
+    .cert-card { border-radius: 10px; }
+    .tool-card::before,
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .tool-card > *, .cert-card > * { position: relative; z-index: 2; }
+    /* keep the cert accent bar visible above the highlight */
+    .cert-card::before { height: 40%; }
+
+    /* ═══════════════════════════════════════════════════
+       NAME  ·  decrypt reveal + glitch on hover
+       ═══════════════════════════════════════════════════ */
+    .name-main {
+      position: relative;
+      cursor: default;
+      display: inline-block;
+    }
+    /* the scrambling characters get a cyan tint until resolved */
+    .name-main .scrambling {
+      color: var(--cyan);
+      opacity: 0.85;
+      text-shadow: 0 0 10px rgba(0, 255, 238, 0.6);
+    }
+
+    /* glitch layers (mirrors the text via data-text) */
+    .name-main.glitch::before,
+    .name-main.glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      background: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .name-main.glitch::before {
+      color: var(--red);
+      -webkit-text-fill-color: var(--red);
+      z-index: -1;
+      animation: glitch-x 0.4s infinite linear alternate;
+    }
+    .name-main.glitch::after {
+      color: var(--cyan);
+      -webkit-text-fill-color: var(--cyan);
+      z-index: -2;
+      animation: glitch-y 0.4s infinite linear alternate;
+    }
+    @keyframes glitch-x {
+      0%   { transform: translate(0); clip-path: inset(0 0 85% 0); }
+      25%  { transform: translate(-3px, 1px); clip-path: inset(30% 0 40% 0); }
+      50%  { transform: translate(3px, -1px); clip-path: inset(60% 0 10% 0); }
+      75%  { transform: translate(-2px, 1px); clip-path: inset(10% 0 70% 0); }
+      100% { transform: translate(2px, -1px); clip-path: inset(45% 0 25% 0); }
+    }
+    @keyframes glitch-y {
+      0%   { transform: translate(0); clip-path: inset(80% 0 5% 0); }
+      25%  { transform: translate(3px, -1px); clip-path: inset(15% 0 55% 0); }
+      50%  { transform: translate(-3px, 1px); clip-path: inset(50% 0 30% 0); }
+      75%  { transform: translate(2px, -1px); clip-path: inset(5% 0 80% 0); }
+      100% { transform: translate(-2px, 1px); clip-path: inset(35% 0 40% 0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .name-main.glitch::before,
+      .name-main.glitch::after { animation: none; }
+      .glass::after { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -793,7 +952,7 @@
           <span>root@kali</span>:~# whoami --verbose<span class="cursor"></span>
         </div>
         <div class="name-block">
-          <div class="name-main">ABHISHEK PATEL</div>
+          <div class="name-main" id="nameMain" data-text="ABHISHEK PATEL" aria-label="ABHISHEK PATEL">ABHISHEK PATEL</div>
           <div class="title-tag">IT Escalations Engineer → Cybersecurity Engineer</div>
         </div>
         <div class="contact-row">
@@ -899,84 +1058,98 @@
       <div class="tool-card">
         <div class="tool-icon">📡</div>
         <div class="tool-name">NMAP</div>
-        <div class="tool-desc">Network mapper for host discovery, port scanning, service versioning & OS detection. Backbone of any recon phase.</div>
+        <div class="tool-desc">Host discovery, port scanning, service/version detection & OS fingerprinting. Extend with NSE scripts for vuln checks. The recon workhorse.</div>
         <span class="tool-tag">Reconnaissance</span>
       </div>
 
       <div class="tool-card">
-        <div class="tool-icon">🔓</div>
-        <div class="tool-name">METASPLOIT</div>
-        <div class="tool-desc">World's most used penetration testing framework. Exploit modules, payloads, post-exploitation & automation.</div>
-        <span class="tool-tag">Exploitation</span>
+        <div class="tool-icon">☢️</div>
+        <div class="tool-name">NUCLEI</div>
+        <div class="tool-desc">Fast, template-driven vulnerability scanner from ProjectDiscovery. Thousands of community YAML templates for CVEs, misconfigs & exposures.</div>
+        <span class="tool-tag">Vuln Scanning</span>
       </div>
 
       <div class="tool-card">
         <div class="tool-icon">🌐</div>
         <div class="tool-name">BURP SUITE</div>
-        <div class="tool-desc">Industry-leading web application security testing platform. Intercept, modify & replay HTTP/S traffic.</div>
+        <div class="tool-desc">Industry-standard web app testing proxy. Intercept, fuzz & replay HTTP/S, plus Repeater, Intruder and the BApp extension ecosystem.</div>
         <span class="tool-tag">Web AppSec</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🔓</div>
+        <div class="tool-name">METASPLOIT</div>
+        <div class="tool-desc">The de-facto exploitation framework — exploit modules, Meterpreter payloads, post-exploitation & automation via resource scripts.</div>
+        <span class="tool-tag">Exploitation</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🐕</div>
+        <div class="tool-name">BLOODHOUND</div>
+        <div class="tool-desc">Graphs Active Directory & Entra ID attack paths. Reveals privilege-escalation routes to Domain Admin that are invisible on paper.</div>
+        <span class="tool-tag">AD / Identity</span>
       </div>
 
       <div class="tool-card">
         <div class="tool-icon">🦈</div>
         <div class="tool-name">WIRESHARK</div>
-        <div class="tool-desc">Deep packet inspection and network protocol analysis. Dissect live traffic or pcap captures in real-time.</div>
+        <div class="tool-desc">Deep packet inspection & protocol analysis. Dissect live traffic or pcap captures to trace intrusions and decode suspicious flows.</div>
         <span class="tool-tag">Network Analysis</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">⚡</div>
-        <div class="tool-name">AIRCRACK-NG</div>
-        <div class="tool-desc">Complete suite for 802.11 WEP/WPA wireless network security assessment — capture, crack, replay attacks.</div>
-        <span class="tool-tag">Wireless</span>
       </div>
 
       <div class="tool-card">
         <div class="tool-icon">🔐</div>
         <div class="tool-name">HASHCAT</div>
-        <div class="tool-desc">World's fastest password recovery utility. GPU-accelerated brute-force, dictionary & rule-based attacks.</div>
+        <div class="tool-desc">The fastest GPU-accelerated password recovery tool. Dictionary, mask, rule-based & hybrid attacks across 300+ hash modes.</div>
         <span class="tool-tag">Password Cracking</span>
       </div>
 
       <div class="tool-card">
         <div class="tool-icon">🕷️</div>
         <div class="tool-name">SQLMAP</div>
-        <div class="tool-desc">Automated SQL injection and database takeover tool. Detects and exploits SQLi in web applications.</div>
+        <div class="tool-desc">Automated SQL injection detection & database takeover. Enumerates schemas, dumps data and can pivot to OS command execution.</div>
         <span class="tool-tag">Injection</span>
       </div>
 
       <div class="tool-card">
-        <div class="tool-icon">🔍</div>
-        <div class="tool-name">JOHN THE RIPPER</div>
-        <div class="tool-desc">Classic offline password cracker supporting 20+ hash types — Unix, Windows NTLM, Kerberos and more.</div>
-        <span class="tool-tag">Password Cracking</span>
-      </div>
-
-      <div class="tool-card">
         <div class="tool-icon">🧱</div>
-        <div class="tool-name">GOBUSTER / FFUF</div>
-        <div class="tool-desc">Directory/file & DNS brute-forcing tools. Uncover hidden web paths, vhosts & parameters at high speed.</div>
+        <div class="tool-name">FFUF</div>
+        <div class="tool-desc">Blazing-fast web fuzzer for directories, files, vhosts & parameters. Go-powered successor to gobuster/wfuzz for content discovery.</div>
         <span class="tool-tag">Enumeration</span>
       </div>
 
       <div class="tool-card">
+        <div class="tool-icon">🛰️</div>
+        <div class="tool-name">SLIVER</div>
+        <div class="tool-desc">Modern open-source C2 framework (BishopFox). Cross-platform implants over mTLS/HTTP(S)/DNS — the go-to Cobalt Strike alternative.</div>
+        <span class="tool-tag">Command & Control</span>
+      </div>
+
+      <div class="tool-card">
         <div class="tool-icon">🛡️</div>
-        <div class="tool-name">MS DEFENDER</div>
-        <div class="tool-desc">Enterprise-grade threat protection used daily to hunt, quarantine & respond to phishing & malware campaigns.</div>
+        <div class="tool-name">MS DEFENDER XDR</div>
+        <div class="tool-desc">Enterprise XDR used daily — advanced hunting with KQL across endpoint, email & identity to triage, quarantine & respond to campaigns.</div>
         <span class="tool-tag">Threat Hunting</span>
       </div>
 
       <div class="tool-card">
         <div class="tool-icon">☁️</div>
-        <div class="tool-name">AWS IAM / PACU</div>
-        <div class="tool-desc">Cloud security posture management & AWS exploitation framework for IAM privilege escalation testing.</div>
+        <div class="tool-name">PROWLER / SCOUTSUITE</div>
+        <div class="tool-desc">Multi-cloud security posture assessment for AWS, Azure & GCP. Audit IAM, exposure & CIS benchmarks; pair with Pacu for exploitation.</div>
         <span class="tool-tag">Cloud Security</span>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🔎</div>
+        <div class="tool-name">SPLUNK / SIEM</div>
+        <div class="tool-desc">Centralized log analytics & detection engineering. Build correlation searches and dashboards to surface anomalies and drive IR.</div>
+        <span class="tool-tag">SIEM / Detection</span>
       </div>
 
       <div class="tool-card">
         <div class="tool-icon">🐉</div>
         <div class="tool-name">KALI LINUX</div>
-        <div class="tool-desc">Debian-based penetration testing OS — home base for ethical hacking with 600+ pre-installed security tools.</div>
+        <div class="tool-desc">Debian-based offensive-security distro — home base for ethical hacking with 600+ curated tools, plus Kali Purple for defense.</div>
         <span class="tool-tag">Platform</span>
       </div>
 
@@ -1241,6 +1414,66 @@
 
 <!-- ─────────────────── SCRIPTS ─────────────────── -->
 <script>
+  /* ── Name: decrypt/scramble reveal + glitch on hover ── */
+  (function () {
+    const el = document.getElementById('nameMain');
+    if (!el) return;
+    const finalText = el.dataset.text || el.textContent;
+    const glyphs = '!<>-_\\/[]{}—=+*^?#01ABCDEF$%&@';
+    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function scramble(onDone) {
+      if (prefersReduced) {
+        el.textContent = finalText;
+        if (onDone) onDone();
+        return;
+      }
+      const chars = finalText.split('');
+      let frame = 0;
+      const totalFrames = 46;              // ~0.75s at ~60fps
+      const revealAt = chars.map((_, i) =>
+        Math.floor((i / chars.length) * (totalFrames - 12)) + Math.floor(Math.random() * 8)
+      );
+
+      const timer = setInterval(() => {
+        let html = '';
+        let done = 0;
+        for (let i = 0; i < chars.length; i++) {
+          if (chars[i] === ' ') { html += ' '; done++; continue; }
+          if (frame >= revealAt[i]) {
+            html += chars[i];
+            done++;
+          } else {
+            html += '<span class="scrambling">' + rand(glyphs) + '</span>';
+          }
+        }
+        el.innerHTML = html;
+        frame++;
+        if (done === chars.length) {
+          clearInterval(timer);
+          el.textContent = finalText;
+          if (onDone) onDone();
+        }
+      }, 16);
+    }
+
+    // Initial decrypt reveal (after the name-block slides up)
+    setTimeout(() => scramble(() => {
+      // brief glitch flourish once decrypted
+      el.classList.add('glitch');
+      setTimeout(() => el.classList.remove('glitch'), 500);
+    }), 650);
+
+    // Glitch on hover; re-run decrypt on click
+    el.addEventListener('mouseenter', () => el.classList.add('glitch'));
+    el.addEventListener('mouseleave', () => el.classList.remove('glitch'));
+    el.addEventListener('click', () => {
+      el.classList.remove('glitch');
+      scramble();
+    });
+  })();
+
   /* ── Particles ── */
   (function () {
     const canvas = document.getElementById('particles');
