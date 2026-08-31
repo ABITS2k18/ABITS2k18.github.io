@@ -937,6 +937,164 @@
       .name-main.glitch::after { animation: none; }
       .glass::after { transition: none; }
     }
+
+    /* ═══════════════════════════════════════════════════
+       FIXED BOTTOM BAR  ·  company marquee + Zoom CTA
+       (finseo-style trusted-by strip, liquid glass)
+       ═══════════════════════════════════════════════════ */
+    .cta-bar {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 12px 24px;
+      background: linear-gradient(
+        90deg,
+        rgba(8, 13, 26, 0.72) 0%,
+        rgba(10, 17, 40, 0.60) 100%
+      );
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      border-top: 1px solid rgba(0, 170, 255, 0.28);
+      box-shadow:
+        0 -8px 40px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        0 0 24px rgba(0, 170, 255, 0.08);
+      transform: translateY(120%);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cta-bar.visible { transform: translateY(0); }
+
+    /* animated top accent line */
+    .cta-bar::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 0;
+      width: 40%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      animation: ctaScan 4s linear infinite;
+    }
+    @keyframes ctaScan {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(350%); }
+    }
+
+    .cta-label {
+      flex-shrink: 0;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      white-space: nowrap;
+    }
+    .cta-label::before { content: '> '; opacity: 0.7; }
+
+    /* marquee viewport */
+    .cta-marquee {
+      flex: 1;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .cta-track {
+      display: flex;
+      width: max-content;
+      gap: 48px;
+      animation: ctaMarquee 22s linear infinite;
+    }
+    .cta-bar:hover .cta-track { animation-play-state: paused; }
+    @keyframes ctaMarquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .cta-company {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      white-space: nowrap;
+      opacity: 0.85;
+      transition: color 0.3s, opacity 0.3s;
+    }
+    .cta-company:hover { color: var(--cyan); opacity: 1; }
+    .cta-company .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 8px var(--blue);
+      flex-shrink: 0;
+    }
+
+    /* Zoom CTA button */
+    .cta-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, rgba(0,85,255,0.25), rgba(0,170,255,0.12));
+      border: 1px solid var(--blue);
+      color: #fff;
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .cta-btn:hover {
+      background: linear-gradient(135deg, rgba(0,85,255,0.45), rgba(0,170,255,0.22));
+      box-shadow: var(--glow);
+      transform: translateY(-2px);
+    }
+    .cta-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+    /* dismiss (close) button */
+    .cta-close {
+      flex-shrink: 0;
+      background: transparent;
+      border: 1px solid var(--dim);
+      color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px;
+      line-height: 1;
+      width: 28px; height: 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .cta-close:hover { color: var(--red); border-color: var(--red); }
+
+    /* keep page content clear of the fixed bar */
+    body.has-cta-bar footer { padding-bottom: 90px; }
+
+    @media (max-width: 768px) {
+      .cta-label { display: none; }
+      .cta-bar { gap: 14px; padding: 10px 14px; }
+      .cta-btn { padding: 10px 16px; font-size: 11px; }
+    }
+    @media (max-width: 480px) {
+      .cta-company { font-size: 12px; }
+      .cta-btn span.cta-btn-text { display: none; }
+      .cta-btn { padding: 10px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cta-bar { transition: none; }
+      .cta-track { animation-duration: 60s; }
+      .cta-bar::before { animation: none; }
+    }
   </style>
 </head>
 <body>
@@ -1413,7 +1571,49 @@
 </footer>
 
 <!-- ─────────────────── SCRIPTS ─────────────────── -->
+<!-- ─────────────────── FIXED BOTTOM BAR: companies + Zoom CTA ─────────────────── -->
+<div class="cta-bar" id="ctaBar" role="region" aria-label="Companies and booking">
+  <span class="cta-label">worked_with</span>
+
+  <div class="cta-marquee">
+    <div class="cta-track">
+      <!-- set A -->
+      <span class="cta-company"><span class="dot"></span>AMAZON</span>
+      <span class="cta-company"><span class="dot"></span>LINAMAR</span>
+      <span class="cta-company"><span class="dot"></span>MINISTRY OF CONSUMER SERVICES</span>
+      <!-- set B (duplicate for seamless loop) -->
+      <span class="cta-company" aria-hidden="true"><span class="dot"></span>AMAZON</span>
+      <span class="cta-company" aria-hidden="true"><span class="dot"></span>LINAMAR</span>
+      <span class="cta-company" aria-hidden="true"><span class="dot"></span>MINISTRY OF CONSUMER SERVICES</span>
+    </div>
+  </div>
+
+  <a class="cta-btn" href="https://amazon.zoom.us/zbook/abhishek-patel-3q50l1" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H4zm14.5 2.5L22 6v12l-3.5-2.5v-7z"/></svg>
+    <span class="cta-btn-text">Book a Zoom Meeting</span>
+  </a>
+
+  <button class="cta-close" id="ctaClose" aria-label="Dismiss bar" title="Dismiss">&times;</button>
+</div>
+
 <script>
+  /* ── Fixed bottom bar: reveal + dismiss ── */
+  (function () {
+    const bar = document.getElementById('ctaBar');
+    const close = document.getElementById('ctaClose');
+    if (!bar) return;
+    document.body.classList.add('has-cta-bar');
+    // slide in shortly after load
+    setTimeout(() => bar.classList.add('visible'), 900);
+    if (close) {
+      close.addEventListener('click', () => {
+        bar.classList.remove('visible');
+        document.body.classList.remove('has-cta-bar');
+        setTimeout(() => { bar.style.display = 'none'; }, 600);
+      });
+    }
+  })();
+
   /* ── Name: decrypt/scramble reveal + glitch on hover ── */
   (function () {
     const el = document.getElementById('nameMain');
