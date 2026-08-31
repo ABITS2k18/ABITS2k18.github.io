@@ -1050,17 +1050,25 @@
       box-shadow: 0 0 8px var(--blue);
       flex-shrink: 0;
     }
-    /* Government of Ontario logo — official SVG (self-hosted in /assets) */
+    /* Government of Ontario logo — 1972 TM83 trillium (real asset used as luminance mask) */
     .cta-company .ontario-logo {
       display: inline-block;
-      height: 18px;
-      width: 72px;
+      height: 20px;
+      width: 20px;
       flex-shrink: 0;
-      background-repeat: no-repeat;
-      background-position: left center;
-      background-size: contain;
+      /* paint solid white, shaped by the logo's bright pixels; dark bg is ignored */
+      background-color: #ffffff;
+      -webkit-mask-image: url("assets/ontario-trillium.jpg");
+      mask-image: url("assets/ontario-trillium.jpg");
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: 155% auto;   /* zoom into the centered mark */
+      mask-size: 155% auto;
+      -webkit-mask-mode: luminance;
+      mask-mode: luminance;
       filter: drop-shadow(0 0 3px rgba(0,170,255,0.4));
-      background-image: url("assets/ontario-logo.svg");
     }
     /* Linamar logo — official SVG (self-hosted in /assets) */
     .cta-company .linamar-logo {
