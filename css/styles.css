@@ -248,6 +248,37 @@ em { font-style: italic; color: var(--accent-d); }
 .contact__links a { text-decoration: none; color: var(--ink); border-bottom: 1px solid transparent; transition: border-color 0.3s, color 0.3s; padding-bottom: 1px; }
 .contact__links a:hover { color: var(--accent-d); border-color: var(--accent); }
 
+/* Contact layout: form + aside */
+.contact__grid { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 2.5rem; align-items: start; }
+.contact__aside .contact__k { display: block; margin-bottom: 0.9rem; }
+.contact__aside .contact__links li { display: block; grid-template-columns: none; border-top: 0; padding: 0.35rem 0; }
+
+/* Form */
+.cform { display: flex; flex-direction: column; gap: 1.1rem; }
+.field { display: flex; flex-direction: column; }
+.field label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+.field input, .field textarea {
+  font-family: var(--sans);
+  font-size: 0.98rem;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.7rem 0.85rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  resize: vertical;
+}
+.field input:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79, 100, 128, 0.12);
+}
+.cform .btn { align-self: flex-start; cursor: pointer; font-family: var(--sans); }
+.cform__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.cform__note { font-size: 0.9rem; min-height: 1.2em; margin-top: 0.2rem; }
+.cform__note.is-error { color: #a5432f; }
+.cform__note.is-ok { color: var(--accent-d); }
+
 /* Footer */
 .foot { margin-top: 4rem; display: flex; gap: 0.6rem; font-size: 0.8rem; color: var(--muted); }
 .foot__dot { color: var(--line); }
@@ -280,6 +311,7 @@ em { font-style: italic; color: var(--accent-d); }
   .job__meta { flex-direction: row; gap: 0.8rem; align-items: baseline; }
   .cert { grid-template-columns: 1fr; gap: 0.2rem; }
   .contact__links li { grid-template-columns: 1fr; gap: 0.15rem; }
+  .contact__grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

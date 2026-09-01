@@ -31,7 +31,7 @@
 
       <div class="side__foot">
         <a href="https://www.linkedin.com/in/abhipatel29/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:Abhishek2995@gmail.com">Email</a>
+        <a href="#contact">Contact</a>
       </div>
     </div>
   </header>
@@ -229,14 +229,37 @@
         <h2 class="section__title">Contact</h2>
       </div>
 
-      <p class="contact__lede">Have a role, a project, or just want to connect? I reply to every message.</p>
+      <p class="contact__lede">Have a role, a project, or just want to connect? Send a message below — I reply to every one.</p>
 
-      <ul class="contact__links">
-        <li><span class="contact__k">Email</span><a href="mailto:Abhishek2995@gmail.com">Abhishek2995@gmail.com</a></li>
-        <li><span class="contact__k">Phone</span><a href="tel:+14164711315">+1 (416) 471-1315</a></li>
-        <li><span class="contact__k">LinkedIn</span><a href="https://www.linkedin.com/in/abhipatel29/" target="_blank" rel="noopener">linkedin.com/in/abhipatel29</a></li>
-        <li><span class="contact__k">Meet</span><a href="https://amazon.zoom.us/zbook/abhishek-patel-3q50l1" target="_blank" rel="noopener">Book a Zoom meeting</a></li>
-      </ul>
+      <div class="contact__grid">
+        <form class="cform" id="contactForm" novalidate
+              action="https://formspree.io/f/xrpgpvpp" method="POST">
+          <div class="field">
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" name="name" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" required></textarea>
+          </div>
+          <!-- honeypot: bots fill this, humans don't -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="cform__hp" />
+          <button type="submit" class="btn">Send message</button>
+          <p class="cform__note" id="cformNote" role="status" aria-live="polite"></p>
+        </form>
+
+        <aside class="contact__aside">
+          <p class="contact__k">Elsewhere</p>
+          <ul class="contact__links">
+            <li><a href="https://www.linkedin.com/in/abhipatel29/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://amazon.zoom.us/zbook/abhishek-patel-3q50l1" target="_blank" rel="noopener">Book a Zoom meeting</a></li>
+          </ul>
+        </aside>
+      </div>
     </section>
 
     <footer class="foot">
