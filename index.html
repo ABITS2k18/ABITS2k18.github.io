@@ -2,1819 +2,250 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abhishek Patel // Cyber Security Engineer</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4c-2 0-4 1-5 3l-8 14c-1 2-3 4-6 5l-5 2c-2 1-3 3-3 5s1 4 3 5l5 2c3 1 5 3 6 5l3 6c0 1 1 2 1 3l2 4c1 2 3 3 5 3s4-1 5-3l2-4c0-1 1-2 1-3l3-6c1-2 3-4 6-5l5-2c2-1 3-3 3-5s-1-4-3-5l-5-2c-3-1-5-3-6-5L37 7c-1-2-3-3-5-3z' fill='%2300aaff'/%3E%3Ccircle cx='28' cy='28' r='2.5' fill='%23050810'/%3E%3Ccircle cx='36' cy='28' r='2.5' fill='%23050810'/%3E%3Cpath d='M27 36c0 0 2 3 5 3s5-3 5-3' stroke='%23050810' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M30 36l-2 5M34 36l2 5' stroke='%23050810' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg:        #050810;
-      --bg2:       #080d1a;
-      --panel:     #0a1128;
-      --blue:      #00aaff;
-      --blue2:     #0055ff;
-      --cyan:      #00ffee;
-      --green:     #00ff88;
-      --red:       #ff2255;
-      --dim:       #1a2a4a;
-      --text:      #c8e0ff;
-      --muted:     #4a6080;
-      --border:    #0a2040;
-      --glow:      0 0 8px #00aaff88, 0 0 24px #00aaff33;
-      --glow-sm:   0 0 4px #00aaff66;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* ─── SCANLINES OVERLAY ─── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.07) 2px,
-        rgba(0,0,0,0.07) 4px
-      );
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* ─── GRID BACKGROUND ─── */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background-image:
-        linear-gradient(rgba(0,170,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,170,255,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ─── PARTICLES CANVAS ─── */
-    #particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
-
-    /* ─── LAYOUT ─── */
-    .wrapper { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-    /* ─── TERMINAL CURSOR ─── */
-    .cursor {
-      display: inline-block;
-      width: 10px; height: 1.2em;
-      background: var(--blue);
-      animation: blink 1s step-end infinite;
-      vertical-align: text-bottom;
-      margin-left: 2px;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-    /* ─── HEADER ─── */
-    header {
-      position: relative;
-      padding: 60px 0 40px;
-      border-bottom: 1px solid var(--dim);
-    }
-
-    .header-grid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .terminal-prompt {
-      font-family: 'Share Tech Mono', monospace;
-      color: var(--green);
-      font-size: 13px;
-      margin-bottom: 16px;
-      opacity: 0;
-      animation: fadeIn 0.5s 0.3s forwards;
-    }
-    .terminal-prompt span { color: var(--blue); }
-
-    .name-block {
-      opacity: 0;
-      animation: slideUp 0.7s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
-    }
-
-    .name-main {
-      font-family: 'Orbitron', monospace;
-      font-weight: 900;
-      font-size: clamp(32px, 5vw, 62px);
-      letter-spacing: 0.05em;
-      line-height: 1;
-      background: linear-gradient(135deg, #fff 0%, var(--blue) 50%, var(--cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: none;
-      filter: drop-shadow(0 0 20px #00aaff55);
-    }
-
-    .title-tag {
-      font-family: 'Orbitron', monospace;
-      font-size: 13px;
-      color: var(--blue);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .title-tag::before {
-      content: '';
-      display: inline-block;
-      width: 30px; height: 1px;
-      background: var(--blue);
-      box-shadow: var(--glow-sm);
-    }
-
-    .contact-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 24px;
-      opacity: 0;
-      animation: fadeIn 0.5s 1s forwards;
-    }
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .contact-item:hover { color: var(--cyan); }
-    .contact-item .icon {
-      width: 16px; height: 16px;
-      fill: currentColor;
-    }
-
-    /* Status Badge */
-    .status-badge {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      opacity: 0;
-      animation: fadeIn 0.5s 0.8s forwards;
-    }
-    .hex-avatar {
-      position: relative;
-      width: 120px; height: 138px;
-    }
-    .hex-avatar svg { width: 100%; height: 100%; }
-    .status-indicator {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--green);
-      background: rgba(0,255,136,0.08);
-      border: 1px solid rgba(0,255,136,0.2);
-      padding: 4px 12px;
-      border-radius: 2px;
-    }
-    .status-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 8px var(--green);
-      animation: pulse 2s ease infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
-
-    /* ─── NAV ─── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(5,8,16,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--dim);
-      padding: 14px 0;
-    }
-    .nav-inner {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-    }
-    .nav-link {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 6px 14px;
-      border: 1px solid transparent;
-      border-radius: 2px;
-      letter-spacing: 0.1em;
-      transition: all 0.2s;
-    }
-    .nav-link:hover, .nav-link.active {
-      color: var(--blue);
-      border-color: var(--dim);
-      background: rgba(0,170,255,0.06);
-      box-shadow: var(--glow-sm);
-    }
-    .nav-sep { color: var(--dim); margin: 0 4px; font-family: 'Share Tech Mono',monospace; font-size:12px;}
-
-    /* ─── SECTIONS ─── */
-    section { padding: 70px 0; border-bottom: 1px solid rgba(10,32,64,0.6); }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-    .section-num {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--blue);
-      opacity: 0.5;
-    }
-    .section-title {
-      font-family: 'Orbitron', monospace;
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: 0.2em;
-      color: #fff;
-      text-transform: uppercase;
-    }
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--dim), transparent);
-    }
-
-    /* ─── SUMMARY ─── */
-    .summary-panel {
-      background: var(--panel);
-      border: 1px solid var(--dim);
-      border-left: 3px solid var(--blue);
-      padding: 28px 32px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--text);
-      position: relative;
-      box-shadow: inset 0 0 40px rgba(0,85,255,0.04);
-    }
-    .summary-panel::before {
-      content: '> PROFILE.init()';
-      display: block;
-      color: var(--green);
-      font-size: 12px;
-      margin-bottom: 16px;
-      opacity: 0.7;
-    }
-
-    /* ─── SKILLS / TOOLS ─── */
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-    }
-    .tool-card {
-      background: var(--panel);
-      border: 1px solid var(--dim);
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
-      cursor: default;
-    }
-    .tool-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(0,170,255,0.04), transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .tool-card:hover {
-      border-color: var(--blue2);
-      transform: translateY(-2px);
-      box-shadow: var(--glow);
-    }
-    .tool-card:hover::after { opacity: 1; }
-    .tool-icon {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-    .tool-name {
-      font-family: 'Orbitron', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--blue);
-      letter-spacing: 0.1em;
-      margin-bottom: 6px;
-    }
-    .tool-desc {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .tool-tag {
-      display: inline-block;
-      margin-top: 10px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      color: var(--cyan);
-      background: rgba(0,255,238,0.07);
-      border: 1px solid rgba(0,255,238,0.15);
-      padding: 2px 8px;
-      border-radius: 2px;
-    }
-
-    /* ─── SKILL BARS ─── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px 48px;
-    }
-    .skill-row { margin-bottom: 4px; }
-    .skill-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-    .skill-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--text);
-    }
-    .skill-pct {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--blue);
-    }
-    .bar-track {
-      height: 3px;
-      background: var(--dim);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--blue2), var(--cyan));
-      border-radius: 2px;
-      width: 0;
-      transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
-      box-shadow: 0 0 6px var(--cyan);
-    }
-
-    /* ─── EXPERIENCE ─── */
-    .timeline { position: relative; padding-left: 32px; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8px; bottom: 0;
-      width: 1px;
-      background: linear-gradient(180deg, var(--blue), transparent);
-    }
-    .exp-item {
-      position: relative;
-      margin-bottom: 48px;
-      opacity: 0;
-      transform: translateX(-16px);
-      transition: opacity 0.6s, transform 0.6s;
-    }
-    .exp-item.visible { opacity: 1; transform: translateX(0); }
-    .exp-item::before {
-      content: '';
-      position: absolute;
-      left: -36px; top: 8px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--blue);
-      box-shadow: var(--glow);
-    }
-    .exp-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-    .exp-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-    }
-    .exp-company {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 13px;
-      color: var(--blue);
-      margin-bottom: 4px;
-    }
-    .exp-date {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      background: rgba(0,170,255,0.08);
-      border: 1px solid var(--dim);
-      padding: 2px 10px;
-      border-radius: 2px;
-      white-space: nowrap;
-    }
-    .exp-bullets {
-      list-style: none;
-      margin-top: 12px;
-    }
-    .exp-bullets li {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--muted);
-      padding: 4px 0;
-      padding-left: 18px;
-      position: relative;
-      line-height: 1.6;
-    }
-    .exp-bullets li::before {
-      content: '▹';
-      position: absolute; left: 0;
-      color: var(--blue);
-    }
-
-    /* ─── CERTS ─── */
-    .certs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-    .cert-card {
-      background: var(--panel);
-      border: 1px solid var(--dim);
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
-    }
-    .cert-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: linear-gradient(90deg, var(--blue2), var(--cyan));
-    }
-    .cert-card:hover {
-      border-color: var(--blue2);
-      box-shadow: var(--glow);
-      transform: translateY(-2px);
-    }
-    .cert-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      color: var(--blue);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .cert-name {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      color: #fff;
-      line-height: 1.3;
-    }
-    .cert-school {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    /* ─── MISSION / TARGET ─── */
-    .target-panel {
-      background: linear-gradient(135deg, rgba(0,85,255,0.06), rgba(0,170,255,0.03));
-      border: 1px solid rgba(0,170,255,0.2);
-      padding: 36px;
-      position: relative;
-      overflow: hidden;
-    }
-    .target-panel::before {
-      content: '// OBJECTIVE';
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--blue);
-      opacity: 0.4;
-      display: block;
-      margin-bottom: 16px;
-      letter-spacing: 0.2em;
-    }
-    .target-text {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      font-size: 22px;
-      color: #fff;
-      line-height: 1.5;
-    }
-    .target-text em {
-      font-style: normal;
-      color: var(--cyan);
-    }
-    .corner-deco {
-      position: absolute;
-      width: 40px; height: 40px;
-      border-color: var(--blue);
-      border-style: solid;
-      opacity: 0.3;
-    }
-    .corner-deco.tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
-    .corner-deco.tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
-    .corner-deco.bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
-    .corner-deco.br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
-
-    /* ─── FOOTER ─── */
-    footer {
-      padding: 40px 0;
-      text-align: center;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-    }
-    footer span { color: var(--blue); }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes scanIn {
-      from { clip-path: inset(0 100% 0 0); }
-      to   { clip-path: inset(0 0% 0 0); }
-    }
-
-    /* ─── TYPING EFFECT ─── */
-    .type-text {
-      overflow: hidden;
-      white-space: nowrap;
-      animation: typing 2s steps(40) 1.2s both;
-      border-right: 2px solid var(--blue);
-    }
-    @keyframes typing {
-      from { width: 0; }
-      to   { width: 100%; }
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      .header-grid { grid-template-columns: 1fr; }
-      .status-badge { display: none; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .tools-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 480px) {
-      .tools-grid { grid-template-columns: 1fr; }
-      .contact-form-wrapper { grid-template-columns: 1fr; }
-    }
-
-    /* ─── CONTACT FORM ─── */
-    .contact-form-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 40px;
-      align-items: start;
-    }
-
-    .contact-intro {
-      position: sticky;
-      top: 100px;
-    }
-
-    .contact-terminal {
-      background: var(--panel);
-      border: 1px solid var(--dim);
-      border-left: 3px solid var(--green);
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-
-    .ct-prompt {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--green);
-      display: block;
-      margin-bottom: 12px;
-      opacity: 0.8;
-    }
-
-    .ct-text {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 15px;
-      color: var(--text);
-      line-height: 1.7;
-    }
-
-    .contact-details-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .cd-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--muted);
-      padding: 10px 16px;
-      background: rgba(0,170,255,0.04);
-      border: 1px solid var(--dim);
-      border-radius: 2px;
-      transition: border-color 0.3s, color 0.3s;
-    }
-
-    .cd-item:hover {
-      border-color: var(--blue);
-      color: var(--cyan);
-    }
-
-    .cd-icon {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      color: var(--blue);
-    }
-
-    .contact-form {
-      background: var(--panel);
-      border: 1px solid var(--dim);
-      padding: 36px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact-form::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: linear-gradient(90deg, var(--blue2), var(--cyan), var(--blue2));
-      animation: scanLine 3s linear infinite;
-    }
-
-    @keyframes scanLine {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .form-group {
-      margin-bottom: 24px;
-      position: relative;
-    }
-
-    .form-label {
-      display: block;
-      font-family: 'Orbitron', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--blue);
-      letter-spacing: 0.15em;
-      margin-bottom: 8px;
-    }
-
-    .label-bracket {
-      color: var(--cyan);
-      opacity: 0.6;
-    }
-
-    .form-input {
-      width: 100%;
-      background: rgba(5,8,16,0.8);
-      border: 1px solid var(--dim);
-      border-radius: 2px;
-      padding: 14px 16px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 13px;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .form-input::placeholder {
-      color: var(--muted);
-      opacity: 0.6;
-    }
-
-    .form-input:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 12px rgba(0,170,255,0.2), inset 0 0 20px rgba(0,170,255,0.03);
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 120px;
-      line-height: 1.6;
-    }
-
-    .form-submit {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: linear-gradient(135deg, rgba(0,85,255,0.15), rgba(0,170,255,0.08));
-      border: 1px solid var(--blue);
-      color: var(--cyan);
-      font-family: 'Orbitron', monospace;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      padding: 14px 32px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
-      border-radius: 2px;
-    }
-
-    .form-submit:hover {
-      background: linear-gradient(135deg, rgba(0,85,255,0.3), rgba(0,170,255,0.15));
-      box-shadow: var(--glow);
-      transform: translateY(-2px);
-      color: #fff;
-    }
-
-    .form-submit:active {
-      transform: translateY(0);
-    }
-
-    .btn-glow {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(0,255,238,0.1), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s;
-    }
-
-    .form-submit:hover .btn-glow {
-      transform: translateX(100%);
-    }
-
-    .btn-icon {
-      display: flex;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) {
-      .contact-form-wrapper { grid-template-columns: 1fr; }
-      .contact-intro { position: static; }
-    }
-
-    /* ═══════════════════════════════════════════════════
-       LIQUID GLASS  ·  glassmorphism layer
-       Frosted, translucent, blurred surfaces with a
-       refractive top highlight + soft inner glow.
-       ═══════════════════════════════════════════════════ */
-    .glass {
-      position: relative;
-      background: linear-gradient(
-        135deg,
-        rgba(0, 170, 255, 0.10) 0%,
-        rgba(10, 17, 40, 0.55) 45%,
-        rgba(5, 8, 16, 0.60) 100%
-      );
-      backdrop-filter: blur(16px) saturate(160%);
-      -webkit-backdrop-filter: blur(16px) saturate(160%);
-      border: 1px solid rgba(0, 170, 255, 0.22);
-      box-shadow:
-        0 8px 40px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        inset 0 0 32px rgba(0, 170, 255, 0.05);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    /* refractive light streak across the top edge */
-    .glass::before {
-      content: '';
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 45%;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.14) 0%,
-        rgba(255, 255, 255, 0.03) 40%,
-        transparent 100%
-      );
-      pointer-events: none;
-      opacity: 0.8;
-    }
-    /* liquid sheen that drifts on hover */
-    .glass::after {
-      content: '';
-      position: absolute;
-      inset: -50%;
-      background: radial-gradient(
-        circle at 30% 20%,
-        rgba(0, 255, 238, 0.10),
-        transparent 45%
-      );
-      transform: translate(0, 0);
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .glass:hover::after { opacity: 1; transform: translate(12%, 10%); }
-
-    /* Apply liquid glass to key surfaces (layered over cyber theme) */
-    nav {
-      background: rgba(8, 13, 26, 0.55) !important;
-      backdrop-filter: blur(18px) saturate(160%);
-      -webkit-backdrop-filter: blur(18px) saturate(160%);
-      border-bottom: 1px solid rgba(0, 170, 255, 0.22) !important;
-    }
-
-    .summary-panel,
-    .tool-card,
-    .cert-card,
-    .target-panel,
-    .contact-form,
-    .contact-terminal {
-      background: linear-gradient(
-        135deg,
-        rgba(0, 170, 255, 0.09) 0%,
-        rgba(10, 17, 40, 0.55) 45%,
-        rgba(5, 8, 16, 0.60) 100%
-      ) !important;
-      backdrop-filter: blur(14px) saturate(150%);
-      -webkit-backdrop-filter: blur(14px) saturate(150%);
-      border: 1px solid rgba(0, 170, 255, 0.20);
-      box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.40),
-        inset 0 1px 0 rgba(255, 255, 255, 0.10);
-    }
-    .tool-card { border-radius: 10px; }
-    .cert-card { border-radius: 10px; }
-    .tool-card::before,
-    .cert-card::before {
-      content: '';
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 40%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), transparent);
-      pointer-events: none;
-      z-index: 1;
-    }
-    .tool-card > *, .cert-card > * { position: relative; z-index: 2; }
-    /* keep the cert accent bar visible above the highlight */
-    .cert-card::before { height: 40%; }
-
-    /* ═══════════════════════════════════════════════════
-       NAME  ·  decrypt reveal + glitch on hover
-       ═══════════════════════════════════════════════════ */
-    .name-main {
-      position: relative;
-      cursor: default;
-      display: inline-block;
-    }
-    /* the scrambling characters get a cyan tint until resolved */
-    .name-main .scrambling {
-      color: var(--cyan);
-      opacity: 0.85;
-      text-shadow: 0 0 10px rgba(0, 255, 238, 0.6);
-    }
-
-    /* glitch layers (mirrors the text via data-text) */
-    .name-main.glitch::before,
-    .name-main.glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0; top: 0;
-      width: 100%;
-      background: transparent;
-      -webkit-background-clip: text;
-      background-clip: text;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .name-main.glitch::before {
-      color: var(--red);
-      -webkit-text-fill-color: var(--red);
-      z-index: -1;
-      animation: glitch-x 0.4s infinite linear alternate;
-    }
-    .name-main.glitch::after {
-      color: var(--cyan);
-      -webkit-text-fill-color: var(--cyan);
-      z-index: -2;
-      animation: glitch-y 0.4s infinite linear alternate;
-    }
-    @keyframes glitch-x {
-      0%   { transform: translate(0); clip-path: inset(0 0 85% 0); }
-      25%  { transform: translate(-3px, 1px); clip-path: inset(30% 0 40% 0); }
-      50%  { transform: translate(3px, -1px); clip-path: inset(60% 0 10% 0); }
-      75%  { transform: translate(-2px, 1px); clip-path: inset(10% 0 70% 0); }
-      100% { transform: translate(2px, -1px); clip-path: inset(45% 0 25% 0); }
-    }
-    @keyframes glitch-y {
-      0%   { transform: translate(0); clip-path: inset(80% 0 5% 0); }
-      25%  { transform: translate(3px, -1px); clip-path: inset(15% 0 55% 0); }
-      50%  { transform: translate(-3px, 1px); clip-path: inset(50% 0 30% 0); }
-      75%  { transform: translate(2px, -1px); clip-path: inset(5% 0 80% 0); }
-      100% { transform: translate(-2px, 1px); clip-path: inset(35% 0 40% 0); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .name-main.glitch::before,
-      .name-main.glitch::after { animation: none; }
-      .glass::after { transition: none; }
-    }
-
-    /* ═══════════════════════════════════════════════════
-       FIXED BOTTOM BAR  ·  company marquee + Zoom CTA
-       (finseo-style trusted-by strip, liquid glass)
-       ═══════════════════════════════════════════════════ */
-    .cta-bar {
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      z-index: 200;
-      width: max-content;
-      max-width: min(760px, calc(100vw - 32px));
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 8px 10px 8px 16px;
-      background: linear-gradient(
-        90deg,
-        rgba(8, 13, 26, 0.78) 0%,
-        rgba(10, 17, 40, 0.66) 100%
-      );
-      backdrop-filter: blur(18px) saturate(160%);
-      -webkit-backdrop-filter: blur(18px) saturate(160%);
-      border: 1px solid rgba(0, 170, 255, 0.30);
-      border-radius: 999px;
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        0 0 24px rgba(0, 170, 255, 0.10);
-      transform: translate(-50%, 160%);
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .cta-bar.visible { transform: translate(-50%, 0); }
-
-    /* animated top accent line (clipped to rounded shape) */
-    .cta-bar::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 40%; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-      animation: ctaScan 4s linear infinite;
-      border-radius: 999px;
-    }
-    @keyframes ctaScan {
-      0%   { transform: translateX(-100%); }
-      100% { transform: translateX(350%); }
-    }
-
-    .cta-label {
-      flex-shrink: 0;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--green);
-      white-space: nowrap;
-    }
-    .cta-label::before { content: '> '; opacity: 0.7; }
-
-    /* marquee viewport */
-    .cta-marquee {
-      flex: 1;
-      min-width: 180px;
-      max-width: 360px;
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-    }
-    .cta-track {
-      display: flex;
-      width: max-content;
-      gap: 34px;
-      animation: ctaMarquee 20s linear infinite;
-    }
-    .cta-bar:hover .cta-track { animation-play-state: paused; }
-    @keyframes ctaMarquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    .cta-company {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Orbitron', monospace;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      color: var(--text);
-      white-space: nowrap;
-      opacity: 0.9;
-      transition: color 0.3s, opacity 0.3s;
-    }
-    .cta-company:hover { color: var(--cyan); opacity: 1; }
-    /* company logo (AWS) — inline SVG, self-contained */
-    .cta-company .aws-logo {
-      display: inline-block;
-      height: 15px;
-      width: 25px;
-      flex-shrink: 0;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      filter: drop-shadow(0 0 3px rgba(0,170,255,0.5));
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Ctext x='50' y='30' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='30' fill='%23ffffff'%3Eaws%3C/text%3E%3Cpath d='M22 44c18 10 40 10 58 0' stroke='%23ff9900' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M74 40l6 4-6 4' stroke='%23ff9900' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    }
-    .cta-company .dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--blue);
-      box-shadow: 0 0 8px var(--blue);
-      flex-shrink: 0;
-    }
-    /* Government of Ontario logo — 1972 TM83 trillium (real asset used as luminance mask) */
-    .cta-company .ontario-logo {
-      display: inline-block;
-      height: 20px;
-      width: 20px;
-      flex-shrink: 0;
-      /* paint solid white, shaped by the logo's bright pixels; dark bg is ignored */
-      background-color: #ffffff;
-      -webkit-mask-image: url("assets/ontario-trillium.jpg");
-      mask-image: url("assets/ontario-trillium.jpg");
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-position: center;
-      -webkit-mask-size: 155% auto;   /* zoom into the centered mark */
-      mask-size: 155% auto;
-      -webkit-mask-mode: luminance;
-      mask-mode: luminance;
-      filter: drop-shadow(0 0 3px rgba(0,170,255,0.4));
-    }
-    /* Linamar logo — official SVG (self-hosted in /assets) */
-    .cta-company .linamar-logo {
-      display: inline-block;
-      height: 15px;
-      width: 63px;
-      flex-shrink: 0;
-      background-repeat: no-repeat;
-      background-position: left center;
-      background-size: contain;
-      filter: drop-shadow(0 0 3px rgba(0,170,255,0.4));
-      background-image: url("assets/linamar-logo.svg");
-    }
-
-    /* Zoom CTA button */
-    .cta-btn {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, rgba(0,85,255,0.25), rgba(0,170,255,0.12));
-      border: 1px solid var(--blue);
-      color: #fff;
-      font-family: 'Orbitron', monospace;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 9px 16px;
-      border-radius: 999px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
-      white-space: nowrap;
-    }
-    .cta-btn:hover {
-      background: linear-gradient(135deg, rgba(0,85,255,0.45), rgba(0,170,255,0.22));
-      box-shadow: var(--glow);
-      transform: translateY(-2px);
-    }
-    .cta-btn svg { width: 15px; height: 15px; fill: currentColor; }
-
-    /* dismiss (close) button */
-    .cta-close {
-      flex-shrink: 0;
-      background: transparent;
-      border: 1px solid var(--dim);
-      color: var(--muted);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 13px;
-      line-height: 1;
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-    .cta-close:hover { color: var(--red); border-color: var(--red); }
-
-    /* keep page content clear of the fixed bar */
-    body.has-cta-bar footer { padding-bottom: 90px; }
-
-    @media (max-width: 768px) {
-      .cta-label { display: none; }
-      .cta-bar { gap: 14px; padding: 10px 14px; }
-      .cta-btn { padding: 10px 16px; font-size: 11px; }
-    }
-    @media (max-width: 480px) {
-      .cta-company { font-size: 12px; }
-      .cta-btn span.cta-btn-text { display: none; }
-      .cta-btn { padding: 10px 14px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .cta-bar { transition: none; }
-      .cta-track { animation-duration: 60s; }
-      .cta-bar::before { animation: none; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Abhishek Patel — IT Escalations Engineer transitioning into cybersecurity. Cloud infrastructure, enterprise identity, endpoint security and threat response." />
+  <title>Abhishek Patel — Engineer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <!-- ===== Sidebar / Nav ===== -->
+  <header class="side">
+    <div class="side__inner">
+      <a href="#top" class="brand">
+        <span class="brand__name">Abhishek Patel</span>
+        <span class="brand__role">IT Escalations → Cybersecurity</span>
+      </a>
 
-<canvas id="particles"></canvas>
+      <nav class="nav" aria-label="Section navigation">
+        <a href="#about" class="nav__link"><span class="nav__idx">01</span> About</a>
+        <a href="#experience" class="nav__link"><span class="nav__idx">02</span> Experience</a>
+        <a href="#skills" class="nav__link"><span class="nav__idx">03</span> Skills</a>
+        <a href="#certifications" class="nav__link"><span class="nav__idx">04</span> Education</a>
+        <a href="#contact" class="nav__link"><span class="nav__idx">05</span> Contact</a>
+      </nav>
 
-<!-- ─────────────────── HEADER ─────────────────── -->
-<header>
-  <div class="wrapper">
-    <div class="header-grid">
-      <div>
-        <div class="terminal-prompt">
-          <span>root@kali</span>:~# whoami --verbose<span class="cursor"></span>
-        </div>
-        <div class="name-block">
-          <div class="name-main" id="nameMain" data-text="ABHISHEK PATEL" aria-label="ABHISHEK PATEL">ABHISHEK PATEL</div>
-          <div class="title-tag">IT Escalations Engineer → Cybersecurity Engineer</div>
-        </div>
-        <div class="contact-row">
-          <a class="contact-item" href="mailto:Abhishek2995@gmail.com">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            Abhishek2995@gmail.com
-          </a>
-          <a class="contact-item" href="tel:+14164711315">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
-            +1 (416) 471-1315
-          </a>
-          <a class="contact-item" href="https://www.linkedin.com/in/abhipatel29/" target="_blank">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
-            linkedin.com/in/abhipatel29
-          </a>
-          <span class="contact-item">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            Canada
-          </span>
-        </div>
-      </div>
-
-      <div class="status-badge">
-        <div class="hex-avatar">
-          <svg viewBox="0 0 120 138" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="hexGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#0055ff" stop-opacity="0.4"/>
-                <stop offset="100%" stop-color="#00ffee" stop-opacity="0.1"/>
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="blur"/>
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            <!-- Hex shape -->
-            <polygon points="60,4 113,33 113,105 60,134 7,105 7,33" fill="url(#hexGrad)" stroke="#00aaff" stroke-width="1" filter="url(#glow)" opacity="0.8"/>
-            <polygon points="60,14 103,38 103,100 60,124 17,100 17,38" fill="none" stroke="#00aaff" stroke-width="0.5" opacity="0.3"/>
-            <!-- Shield icon inside -->
-            <path d="M60 35 L80 43 L80 65 C80 77 70 85 60 88 C50 85 40 77 40 65 L40 43 Z" fill="none" stroke="#00aaff" stroke-width="1.5" opacity="0.9" filter="url(#glow)"/>
-            <path d="M53 60 L58 65 L68 55" stroke="#00ffee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"/>
-            <!-- Rotating ring dashes -->
-            <g opacity="0.4">
-              <circle cx="60" cy="69" r="26" fill="none" stroke="#0055ff" stroke-width="0.5" stroke-dasharray="4 6"/>
-            </g>
-            <text x="60" y="113" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7" fill="#00aaff" opacity="0.6">SEC_ENGINEER</text>
-          </svg>
-        </div>
-        <div class="status-indicator">
-          <div class="status-dot"></div>
-          ACTIVE // AWS
-        </div>
+      <div class="side__foot">
+        <a href="https://www.linkedin.com/in/abhipatel29/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:Abhishek2995@gmail.com">Email</a>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- ─────────────────── NAV ─────────────────── -->
-<nav>
-  <div class="wrapper">
-    <div class="nav-inner">
-      <a class="nav-link active" href="#summary">PROFILE</a>
-      <span class="nav-sep">/</span>
-      <a class="nav-link" href="#tools">TOOLS</a>
-      <span class="nav-sep">/</span>
-      <a class="nav-link" href="#skills">SKILLS</a>
-      <span class="nav-sep">/</span>
-      <a class="nav-link" href="#experience">EXPERIENCE</a>
-      <span class="nav-sep">/</span>
-      <a class="nav-link" href="#certs">CERTS</a>
-      <span class="nav-sep">/</span>
-      <a class="nav-link" href="#mission">MISSION</a>
-      <span class="nav-sep">/</span>
-      <a class="nav-link" href="#contact">CONTACT</a>
-    </div>
-  </div>
-</nav>
+  <!-- ===== Main ===== -->
+  <main class="main" id="top">
 
-<!-- ─────────────────── SUMMARY ─────────────────── -->
-<section id="summary">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <span class="section-title">Profile</span>
-      <div class="section-line"></div>
-    </div>
-    <div class="summary-panel">
-      Results-driven IT Escalations Engineer with 5+ years of progressive experience across cloud infrastructure, enterprise identity management, endpoint security, and on-premises systems administration. Proven track record at Amazon Web Services supporting large-scale internal users on AWS services, Microsoft 365 ecosystem management, and threat response. Adept at bridging corporate security, cloud engineering, and end-user support teams to deliver seamless IT operations and robust security posture.<span class="cursor"></span>
-    </div>
-  </div>
-</section>
+    <!-- Intro -->
+    <section class="intro reveal">
+      <p class="kicker">Based in Canada · Available for cybersecurity roles</p>
+      <h1 class="intro__title">I keep systems <em>secure</em>, accessible, and quietly running.</h1>
+      <p class="intro__lede">
+        I'm an IT Escalations Engineer with 5+ years across cloud infrastructure, enterprise identity,
+        endpoint security and on-premises administration — now moving toward the offensive and defensive
+        frontlines of cybersecurity.
+      </p>
+      <div class="intro__actions">
+        <a href="#experience" class="btn">View experience</a>
+        <a href="https://amazon.zoom.us/zbook/abhishek-patel-3q50l1" target="_blank" rel="noopener" class="btn btn--ghost">Book a Zoom meeting</a>
+      </div>
+    </section>
 
-<!-- ─────────────────── HACKING TOOLS ─────────────────── -->
-<section id="tools">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <span class="section-title">Security Arsenal</span>
-      <div class="section-line"></div>
-    </div>
-    <div class="tools-grid">
+    <!-- About -->
+    <section class="section reveal" id="about">
+      <div class="section__head">
+        <span class="section__idx">01</span>
+        <h2 class="section__title">About</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Results-driven IT Escalations Engineer with a track record at Amazon Web Services supporting
+          large-scale internal users across AWS services, the Microsoft 365 ecosystem, and threat response.
+          I work at the seams between corporate security, cloud engineering, and end-user support — the
+          place where robust security posture and seamless operations either meet or fall apart.
+        </p>
+        <p>
+          My aim is to turn 5+ years of production systems knowledge into a foundation for
+          <em>IT security</em> and <em>threat intelligence</em> — defending digital infrastructure
+          with the perspective of someone who has actually run it.
+        </p>
+      </div>
+    </section>
 
-      <div class="tool-card">
-        <div class="tool-icon">📡</div>
-        <div class="tool-name">NMAP</div>
-        <div class="tool-desc">Host discovery, port scanning, service/version detection & OS fingerprinting. Extend with NSE scripts for vuln checks. The recon workhorse.</div>
-        <span class="tool-tag">Reconnaissance</span>
+    <!-- Experience -->
+    <section class="section reveal" id="experience">
+      <div class="section__head">
+        <span class="section__idx">02</span>
+        <h2 class="section__title">Experience</h2>
       </div>
 
-      <div class="tool-card">
-        <div class="tool-icon">☢️</div>
-        <div class="tool-name">NUCLEI</div>
-        <div class="tool-desc">Fast, template-driven vulnerability scanner from ProjectDiscovery. Thousands of community YAML templates for CVEs, misconfigs & exposures.</div>
-        <span class="tool-tag">Vuln Scanning</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🌐</div>
-        <div class="tool-name">BURP SUITE</div>
-        <div class="tool-desc">Industry-standard web app testing proxy. Intercept, fuzz & replay HTTP/S, plus Repeater, Intruder and the BApp extension ecosystem.</div>
-        <span class="tool-tag">Web AppSec</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🔓</div>
-        <div class="tool-name">METASPLOIT</div>
-        <div class="tool-desc">The de-facto exploitation framework — exploit modules, Meterpreter payloads, post-exploitation & automation via resource scripts.</div>
-        <span class="tool-tag">Exploitation</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🐕</div>
-        <div class="tool-name">BLOODHOUND</div>
-        <div class="tool-desc">Graphs Active Directory & Entra ID attack paths. Reveals privilege-escalation routes to Domain Admin that are invisible on paper.</div>
-        <span class="tool-tag">AD / Identity</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🦈</div>
-        <div class="tool-name">WIRESHARK</div>
-        <div class="tool-desc">Deep packet inspection & protocol analysis. Dissect live traffic or pcap captures to trace intrusions and decode suspicious flows.</div>
-        <span class="tool-tag">Network Analysis</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🔐</div>
-        <div class="tool-name">HASHCAT</div>
-        <div class="tool-desc">The fastest GPU-accelerated password recovery tool. Dictionary, mask, rule-based & hybrid attacks across 300+ hash modes.</div>
-        <span class="tool-tag">Password Cracking</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🕷️</div>
-        <div class="tool-name">SQLMAP</div>
-        <div class="tool-desc">Automated SQL injection detection & database takeover. Enumerates schemas, dumps data and can pivot to OS command execution.</div>
-        <span class="tool-tag">Injection</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🧱</div>
-        <div class="tool-name">FFUF</div>
-        <div class="tool-desc">Blazing-fast web fuzzer for directories, files, vhosts & parameters. Go-powered successor to gobuster/wfuzz for content discovery.</div>
-        <span class="tool-tag">Enumeration</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🛰️</div>
-        <div class="tool-name">SLIVER</div>
-        <div class="tool-desc">Modern open-source C2 framework (BishopFox). Cross-platform implants over mTLS/HTTP(S)/DNS — the go-to Cobalt Strike alternative.</div>
-        <span class="tool-tag">Command & Control</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🛡️</div>
-        <div class="tool-name">MS DEFENDER XDR</div>
-        <div class="tool-desc">Enterprise XDR used daily — advanced hunting with KQL across endpoint, email & identity to triage, quarantine & respond to campaigns.</div>
-        <span class="tool-tag">Threat Hunting</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">☁️</div>
-        <div class="tool-name">PROWLER / SCOUTSUITE</div>
-        <div class="tool-desc">Multi-cloud security posture assessment for AWS, Azure & GCP. Audit IAM, exposure & CIS benchmarks; pair with Pacu for exploitation.</div>
-        <span class="tool-tag">Cloud Security</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🔎</div>
-        <div class="tool-name">SPLUNK / SIEM</div>
-        <div class="tool-desc">Centralized log analytics & detection engineering. Build correlation searches and dashboards to surface anomalies and drive IR.</div>
-        <span class="tool-tag">SIEM / Detection</span>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-icon">🐉</div>
-        <div class="tool-name">KALI LINUX</div>
-        <div class="tool-desc">Debian-based offensive-security distro — home base for ethical hacking with 600+ curated tools, plus Kali Purple for defense.</div>
-        <span class="tool-tag">Platform</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────── SKILLS ─────────────────── -->
-<section id="skills">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <span class="section-title">Technical Skills</span>
-      <div class="section-line"></div>
-    </div>
-    <div class="skills-grid" id="skillsGrid">
-
-      <div class="skill-row">
-        <div class="skill-header"><span class="skill-label">AWS (EC2, VPC, S3, IAM)</span><span class="skill-pct">92%</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="92"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-header"><span class="skill-label">Microsoft Entra ID / Azure AD</span><span class="skill-pct">88%</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="88"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-header"><span class="skill-label">Email Threat Hunting</span><span class="skill-pct">85%</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="85"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-header"><span class="skill-label">Active Directory / Group Policy</span><span class="skill-pct">87%</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="87"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-header"><span class="skill-label">Exchange Online / SharePoint</span><span class="skill-pct">82%</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="82"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-header"><span class="skill-label">Security Incident Response</span><span class="skill-pct">80%</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="80"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-header"><span class="skill-label">Network Infrastructure</span><span class="skill-pct">78%</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="78"></div></div>
-      </div>
-      <div class="skill-row">
-        <div class="skill-header"><span class="skill-label">Penetration Testing (Learning)</span><span class="skill-pct">65%</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="65"></div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────── EXPERIENCE ─────────────────── -->
-<section id="experience">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <span class="section-title">Experience</span>
-      <div class="section-line"></div>
-    </div>
-    <div class="timeline">
-
-      <div class="exp-item">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title">IT Escalations Engineer II</div>
-            <div class="exp-company">Amazon Web Services (AWS) — Canada</div>
+      <ol class="timeline">
+        <li class="job">
+          <div class="job__meta">
+            <span class="job__date">2022 — Present</span>
+            <span class="job__place">Canada</span>
           </div>
-          <span class="exp-date">2022 – Present</span>
-        </div>
-        <ul class="exp-bullets">
-          <li>Tier 2/3 escalation support for internal users on EC2, VPC, S3, and IAM — resolving complex infrastructure and access issues.</li>
-          <li>Manage Microsoft Entra ID (Azure AD), Exchange Online & SharePoint — provisioning, access control, and policy enforcement.</li>
-          <li>Utilize Microsoft Defender to hunt, investigate & quarantine malicious emails, reducing organizational phishing risk.</li>
-          <li>Collaborate with AWS Corporate Security on service onboarding, security controls & incident response playbooks.</li>
-          <li>Develop & maintain a comprehensive IT Knowledge Base, enabling self-service and reducing repeat escalation volume.</li>
-          <li>Subject matter expert on cloud IAM, advising teams on least-privilege principles and access management best practices.</li>
-        </ul>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title">Senior Desktop & Systems Technician</div>
-            <div class="exp-company">Linamar Corporation — Ontario, Canada</div>
+          <div class="job__body">
+            <h3 class="job__title">IT Escalations Engineer II</h3>
+            <p class="job__org">Amazon Web Services (AWS)</p>
+            <ul class="job__points">
+              <li>Tier 2/3 escalation support for internal users on EC2, VPC, S3 and IAM — resolving complex infrastructure and access issues.</li>
+              <li>Manage Microsoft Entra ID (Azure AD), Exchange Online &amp; SharePoint — provisioning, access control and policy enforcement.</li>
+              <li>Use Microsoft Defender to hunt, investigate and quarantine malicious email, reducing organizational phishing risk.</li>
+              <li>Collaborate with AWS Corporate Security on service onboarding, security controls and incident-response playbooks.</li>
+              <li>Build and maintain an IT Knowledge Base that enables self-service and lowers repeat escalation volume.</li>
+              <li>Act as subject-matter expert on cloud IAM, advising teams on least-privilege and access-management best practices.</li>
+            </ul>
           </div>
-          <span class="exp-date">2020 – 2022</span>
-        </div>
-        <ul class="exp-bullets">
-          <li>Comprehensive IT support for 400+ end users — Active Directory, network shares, Group Policy & Hyper-V server admin.</li>
-          <li>Led commissioning & decommissioning of network racks, switches & UPS systems with zero-downtime transitions.</li>
-          <li>Lead IT Engineer for local facility, collaborating on infrastructure upgrade and expansion projects with corporate teams.</li>
-          <li>Administered engineering software licenses (AutoCAD, SolidWorks) for 100+ engineering users.</li>
-        </ul>
-      </div>
+        </li>
 
-      <div class="exp-item">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title">Desktop & Systems Technician Co-op</div>
-            <div class="exp-company">Linamar Corporation – Skyjack Inc. — Ontario, Canada</div>
+        <li class="job">
+          <div class="job__meta">
+            <span class="job__date">2020 — 2022</span>
+            <span class="job__place">Ontario, Canada</span>
           </div>
-          <span class="exp-date">2019 – 2020</span>
-        </div>
-        <ul class="exp-bullets">
-          <li>Laptop imaging, configuration & deployment for new and replacement endpoints across the organization.</li>
-          <li>Frontline user support for hardware, software & connectivity issues.</li>
-          <li>Delivered onboarding & IT training sessions for new employees, accelerating user readiness.</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────── CERTS / EDUCATION ─────────────────── -->
-<section id="certs">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <span class="section-title">Education & Certifications</span>
-      <div class="section-line"></div>
-    </div>
-    <div class="certs-grid">
-
-      <div class="cert-card">
-        <div class="cert-label">Certificate Program</div>
-        <div class="cert-name">Cybersecurity Analyst</div>
-        <div class="cert-school">Flatiron School</div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-label">Diploma</div>
-        <div class="cert-name">Computer and Network Systems</div>
-        <div class="cert-school">Mohawk College</div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-label">Bachelor's Degree</div>
-        <div class="cert-name">Bachelor of Computer Applications (BCA)</div>
-        <div class="cert-school">Gujarat University</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────── MISSION ─────────────────── -->
-<section id="mission">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-num">06</span>
-      <span class="section-title">Mission</span>
-      <div class="section-line"></div>
-    </div>
-    <div class="target-panel">
-      <div class="corner-deco tl"></div>
-      <div class="corner-deco tr"></div>
-      <div class="corner-deco bl"></div>
-      <div class="corner-deco br"></div>
-      <div class="target-text">
-        Transitioning from <em>cloud infrastructure & IT escalations</em> into the offensive and defensive frontlines of <em>cybersecurity</em>. My mission is to leverage deep AWS and enterprise security experience to become a <em>penetration tester</em> and <em>threat intelligence engineer</em> — turning 5+ years of production system knowledge into a weapon for the defense of digital infrastructure.
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────── CONTACT ─────────────────── -->
-<section id="contact">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-num">07</span>
-      <span class="section-title">Contact</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="contact-form-wrapper">
-      <div class="contact-intro">
-        <div class="contact-terminal">
-          <span class="ct-prompt">&gt; INITIATE_CONTACT.sh</span>
-          <p class="ct-text">Got a question, project idea, or just want to connect? Drop me a message below and I'll get back to you ASAP.</p>
-        </div>
-        <div class="contact-details-panel">
-          <div class="cd-item">
-            <svg class="cd-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/></svg>
-            <span>abhishek2995@gmail.com</span>
+          <div class="job__body">
+            <h3 class="job__title">Senior Desktop &amp; Systems Technician</h3>
+            <p class="job__org">Linamar Corporation</p>
+            <ul class="job__points">
+              <li>Comprehensive IT support for 400+ end users — Active Directory, network shares, Group Policy and Hyper-V server administration.</li>
+              <li>Led commissioning and decommissioning of network racks, switches and UPS systems with zero-downtime transitions.</li>
+              <li>Lead IT engineer for the local facility, partnering with corporate teams on infrastructure upgrade and expansion projects.</li>
+              <li>Administered engineering software licenses (AutoCAD, SolidWorks) for 100+ engineering users.</li>
+            </ul>
           </div>
-          <div class="cd-item">
-            <svg class="cd-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/></svg>
-            <span>Canada</span>
+        </li>
+
+        <li class="job">
+          <div class="job__meta">
+            <span class="job__date">2019 — 2020</span>
+            <span class="job__place">Ontario, Canada</span>
           </div>
-          <div class="cd-item">
-            <svg class="cd-icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" fill="currentColor"/></svg>
-            <a href="https://www.linkedin.com/in/abhipatel29/" target="_blank" style="color:inherit;text-decoration:none;">linkedin.com/in/abhipatel29</a>
+          <div class="job__body">
+            <h3 class="job__title">Desktop &amp; Systems Technician (Co-op)</h3>
+            <p class="job__org">Linamar Corporation — Skyjack Inc.</p>
+            <ul class="job__points">
+              <li>Laptop imaging, configuration and deployment for new and replacement endpoints across the organization.</li>
+              <li>Frontline support for hardware, software and connectivity issues.</li>
+              <li>Delivered onboarding and IT training sessions for new employees, accelerating user readiness.</li>
+            </ul>
           </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Skills -->
+    <section class="section reveal" id="skills">
+      <div class="section__head">
+        <span class="section__idx">03</span>
+        <h2 class="section__title">Skills</h2>
+      </div>
+
+      <div class="skills">
+        <div class="skills__col">
+          <h3 class="skills__cat">Cloud &amp; Identity</h3>
+          <ul class="skills__list">
+            <li>AWS — EC2, VPC, S3, IAM</li>
+            <li>Microsoft Entra ID / Azure AD</li>
+            <li>Active Directory &amp; Group Policy</li>
+            <li>Exchange Online &amp; SharePoint</li>
+          </ul>
+        </div>
+
+        <div class="skills__col">
+          <h3 class="skills__cat">Security</h3>
+          <ul class="skills__list">
+            <li>Email threat hunting</li>
+            <li>Security incident response</li>
+            <li>Microsoft Defender XDR</li>
+            <li>Least-privilege &amp; access management</li>
+            <li>IT security <span class="muted">(learning)</span></li>
+          </ul>
+        </div>
+
+        <div class="skills__col">
+          <h3 class="skills__cat">Infrastructure</h3>
+          <ul class="skills__list">
+            <li>Network infrastructure</li>
+            <li>Hyper-V &amp; server administration</li>
+            <li>Endpoint imaging &amp; deployment</li>
+            <li>Knowledge base &amp; documentation</li>
+          </ul>
         </div>
       </div>
 
-      <form class="contact-form" action="https://formsubmit.co/abhishek2995@gmail.com" method="POST">
-        <!-- FormSubmit config -->
-        <input type="hidden" name="_subject" value="New Contact Form Submission from Portfolio">
-        <input type="hidden" name="_captcha" value="true">
-        <input type="hidden" name="_template" value="table">
-        <input type="text" name="_honey" style="display:none">
+      <!-- Security Arsenal, folded in quietly -->
+      <div class="toolbelt">
+        <p class="toolbelt__label">Tooling</p>
+        <p class="toolbelt__list">
+          <span>Nmap</span><span>Wireshark</span><span>Burp&nbsp;Suite</span><span>Metasploit</span><span>Nuclei</span><span>BloodHound</span><span>Hashcat</span><span>SQLmap</span><span>ffuf</span><span>Splunk&nbsp;/&nbsp;SIEM</span><span>Prowler&nbsp;/&nbsp;ScoutSuite</span><span>Kali&nbsp;Linux</span>
+        </p>
+      </div>
+    </section>
 
-        <div class="form-group">
-          <label class="form-label" for="name">
-            <span class="label-bracket">[</span> NAME <span class="label-bracket">]</span>
-          </label>
-          <input type="text" id="name" name="name" class="form-input" placeholder="Your full name" required>
-          <div class="input-glow"></div>
-        </div>
+    <!-- Education & Certifications -->
+    <section class="section reveal" id="certifications">
+      <div class="section__head">
+        <span class="section__idx">04</span>
+        <h2 class="section__title">Education &amp; Certifications</h2>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label" for="email">
-            <span class="label-bracket">[</span> EMAIL <span class="label-bracket">]</span>
-          </label>
-          <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required>
-          <div class="input-glow"></div>
-        </div>
+      <ul class="certs">
+        <li class="cert">
+          <span class="cert__type">Certification</span>
+          <span class="cert__name">CompTIA Security+</span>
+          <span class="cert__org">CompTIA</span>
+        </li>
+        <li class="cert">
+          <span class="cert__type">Certification</span>
+          <span class="cert__name">AWS Certified Cloud Practitioner</span>
+          <span class="cert__org">Amazon Web Services</span>
+        </li>
+        <li class="cert">
+          <span class="cert__type">Certificate</span>
+          <span class="cert__name">Cybersecurity Analyst</span>
+          <span class="cert__org">Flatiron School</span>
+        </li>
+        <li class="cert">
+          <span class="cert__type">Diploma</span>
+          <span class="cert__name">Computer &amp; Network Systems</span>
+          <span class="cert__org">Mohawk College</span>
+        </li>
+        <li class="cert">
+          <span class="cert__type">Bachelor's Degree</span>
+          <span class="cert__name">Bachelor of Computer Applications (BCA)</span>
+          <span class="cert__org">Gujarat University</span>
+        </li>
+      </ul>
+    </section>
 
-        <div class="form-group">
-          <label class="form-label" for="subject">
-            <span class="label-bracket">[</span> SUBJECT <span class="label-bracket">]</span>
-          </label>
-          <input type="text" id="subject" name="_subject" class="form-input" placeholder="What's this about?" required>
-          <div class="input-glow"></div>
-        </div>
+    <!-- Contact -->
+    <section class="section section--contact reveal" id="contact">
+      <div class="section__head">
+        <span class="section__idx">05</span>
+        <h2 class="section__title">Contact</h2>
+      </div>
 
-        <div class="form-group">
-          <label class="form-label" for="message">
-            <span class="label-bracket">[</span> MESSAGE <span class="label-bracket">]</span>
-          </label>
-          <textarea id="message" name="message" class="form-input form-textarea" placeholder="Type your message here..." rows="5" required></textarea>
-          <div class="input-glow"></div>
-        </div>
+      <p class="contact__lede">Have a role, a project, or just want to connect? I reply to every message.</p>
 
-        <button type="submit" class="form-submit">
-          <span class="btn-text">TRANSMIT_MESSAGE</span>
-          <span class="btn-icon">
-            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/></svg>
-          </span>
-          <span class="btn-glow"></span>
-        </button>
-      </form>
-    </div>
-  </div>
-</section>
+      <ul class="contact__links">
+        <li><span class="contact__k">Email</span><a href="mailto:Abhishek2995@gmail.com">Abhishek2995@gmail.com</a></li>
+        <li><span class="contact__k">Phone</span><a href="tel:+14164711315">+1 (416) 471-1315</a></li>
+        <li><span class="contact__k">LinkedIn</span><a href="https://www.linkedin.com/in/abhipatel29/" target="_blank" rel="noopener">linkedin.com/in/abhipatel29</a></li>
+        <li><span class="contact__k">Meet</span><a href="https://amazon.zoom.us/zbook/abhishek-patel-3q50l1" target="_blank" rel="noopener">Book a Zoom meeting</a></li>
+      </ul>
+    </section>
 
-<!-- ─────────────────── FOOTER ─────────────────── -->
-<footer>
-  <div class="wrapper">
-    <p>
-      <span>root@abhishek-patel</span>:~# <span>exit 0</span> &nbsp;|&nbsp;
-      Built with 💙 &amp; Kali vibes &nbsp;|&nbsp;
-      <span>© 2025 Abhishek Patel</span>
-    </p>
-  </div>
-</footer>
+    <footer class="foot">
+      <span>© <span id="year"></span> Abhishek Patel</span>
+      <span class="foot__dot">·</span>
+      <span>Built quietly.</span>
+    </footer>
+  </main>
 
-<!-- ─────────────────── SCRIPTS ─────────────────── -->
-<!-- ─────────────────── FIXED BOTTOM BAR: companies + Zoom CTA ─────────────────── -->
-<div class="cta-bar" id="ctaBar" role="region" aria-label="Companies and booking">
-  <span class="cta-label">worked_with</span>
-
-  <div class="cta-marquee">
-    <div class="cta-track">
-      <!-- set A -->
-      <span class="cta-company"><span class="aws-logo" aria-hidden="true"></span>AMAZON WEB SERVICES</span>
-      <span class="cta-company"><span class="linamar-logo" aria-hidden="true"></span>LINAMAR CORPORATION</span>
-      <span class="cta-company"><span class="ontario-logo" aria-hidden="true"></span>MINISTRY OF GOVERNMENT AND CONSUMER SERVICES</span>
-      <!-- set B (duplicate for seamless loop) -->
-      <span class="cta-company" aria-hidden="true"><span class="aws-logo"></span>AMAZON WEB SERVICES</span>
-      <span class="cta-company" aria-hidden="true"><span class="linamar-logo"></span>LINAMAR CORPORATION</span>
-      <span class="cta-company" aria-hidden="true"><span class="ontario-logo"></span>MINISTRY OF GOVERNMENT AND CONSUMER SERVICES</span>
-    </div>
-  </div>
-
-  <a class="cta-btn" href="https://amazon.zoom.us/zbook/abhishek-patel-3q50l1" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H4zm14.5 2.5L22 6v12l-3.5-2.5v-7z"/></svg>
-    <span class="cta-btn-text">Book a Zoom Meeting</span>
-  </a>
-
-  <button class="cta-close" id="ctaClose" aria-label="Dismiss bar" title="Dismiss">&times;</button>
-</div>
-
-<script>
-  /* ── Fixed bottom bar: reveal + dismiss ── */
-  (function () {
-    const bar = document.getElementById('ctaBar');
-    const close = document.getElementById('ctaClose');
-    if (!bar) return;
-    document.body.classList.add('has-cta-bar');
-    // slide in shortly after load
-    setTimeout(() => bar.classList.add('visible'), 900);
-    if (close) {
-      close.addEventListener('click', () => {
-        bar.classList.remove('visible');
-        document.body.classList.remove('has-cta-bar');
-        setTimeout(() => { bar.style.display = 'none'; }, 600);
-      });
-    }
-  })();
-
-  /* ── Name: decrypt/scramble reveal + glitch on hover ── */
-  (function () {
-    const el = document.getElementById('nameMain');
-    if (!el) return;
-    const finalText = el.dataset.text || el.textContent;
-    const glyphs = '!<>-_\\/[]{}—=+*^?#01ABCDEF$%&@';
-    const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function scramble(onDone) {
-      if (prefersReduced) {
-        el.textContent = finalText;
-        if (onDone) onDone();
-        return;
-      }
-      const chars = finalText.split('');
-      let frame = 0;
-      const totalFrames = 46;              // ~0.75s at ~60fps
-      const revealAt = chars.map((_, i) =>
-        Math.floor((i / chars.length) * (totalFrames - 12)) + Math.floor(Math.random() * 8)
-      );
-
-      const timer = setInterval(() => {
-        let html = '';
-        let done = 0;
-        for (let i = 0; i < chars.length; i++) {
-          if (chars[i] === ' ') { html += ' '; done++; continue; }
-          if (frame >= revealAt[i]) {
-            html += chars[i];
-            done++;
-          } else {
-            html += '<span class="scrambling">' + rand(glyphs) + '</span>';
-          }
-        }
-        el.innerHTML = html;
-        frame++;
-        if (done === chars.length) {
-          clearInterval(timer);
-          el.textContent = finalText;
-          if (onDone) onDone();
-        }
-      }, 16);
-    }
-
-    // Initial decrypt reveal (after the name-block slides up)
-    setTimeout(() => scramble(() => {
-      // brief glitch flourish once decrypted
-      el.classList.add('glitch');
-      setTimeout(() => el.classList.remove('glitch'), 500);
-    }), 650);
-
-    // Glitch on hover; re-run decrypt on click
-    el.addEventListener('mouseenter', () => el.classList.add('glitch'));
-    el.addEventListener('mouseleave', () => el.classList.remove('glitch'));
-    el.addEventListener('click', () => {
-      el.classList.remove('glitch');
-      scramble();
-    });
-  })();
-
-  /* ── Particles ── */
-  (function () {
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let W, H, particles = [];
-
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    for (let i = 0; i < 80; i++) {
-      particles.push({
-        x: Math.random() * 2000,
-        y: Math.random() * 1200,
-        r: Math.random() * 1.2 + 0.2,
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: (Math.random() - 0.5) * 0.15,
-        a: Math.random() * 0.5 + 0.1
-      });
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,170,255,${p.a})`;
-        ctx.fill();
-      });
-      // connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0,85,255,${0.12 * (1 - dist/120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(draw);
-    }
-    draw();
-  })();
-
-  /* ── Skill bar animation on scroll ── */
-  const skillObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        document.querySelectorAll('.bar-fill').forEach(bar => {
-          bar.style.width = bar.dataset.w + '%';
-        });
-        skillObs.disconnect();
-      }
-    });
-  }, { threshold: 0.3 });
-  skillObs.observe(document.getElementById('skillsGrid'));
-
-  /* ── Experience items on scroll ── */
-  const expObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.exp-item').forEach(el => expObs.observe(el));
-
-  /* ── Active nav link ── */
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const navObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
-        if (active) active.classList.add('active');
-      }
-    });
-  }, { threshold: 0.4 });
-  sections.forEach(s => navObs.observe(s));
-</script>
+  <script src="js/main.js"></script>
 </body>
 </html>
